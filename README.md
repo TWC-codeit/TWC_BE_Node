@@ -113,22 +113,22 @@ fix: Safari에서 모달을 띄웠을 때 스크롤 이슈 수정 (#123)
   <tbody>
     <tr>
       <td align="center">
-        <a href="https://github.com/사용자명1">
-          <img src="https://avatars.githubusercontent.com/HSK021843" width="100px" alt="사용자명1" />
+        <a href="https://github.com/HSK021843">
+          <img src="https://avatars.githubusercontent.com/HSK021843" width="100px" alt="김형석" />
           <br />
           <sub><b>김형석</b></sub>
         </a>
       </td>
       <td align="center">
-        <a href="https://github.com/사용자명2">
-          <img src="https://avatars.githubusercontent.com/rosejinse" width="100px" alt="사용자명2" />
+        <a href="https://github.com/rosejinse">
+          <img src="https://avatars.githubusercontent.com/rosejinse" width="100px" alt="진소은" />
           <br />
           <sub><b>진소은</b></sub>
         </a>
       </td>
       <td align="center">
-        <a href="https://github.com/사용자명3">
-          <img src="https://avatars.githubusercontent.com/yjhss" width="100px" alt="사용자명3" />
+        <a href="https://github.com/yjhss">
+          <img src="https://avatars.githubusercontent.com/yjhss" width="100px" alt="홍유진" />
           <br />
           <sub><b>홍유진</b></sub>
         </a>
@@ -136,5 +136,4 @@ fix: Safari에서 모달을 띄웠을 때 스크롤 이슈 수정 (#123)
     </tr>
   </tbody>
 </table>
-
 

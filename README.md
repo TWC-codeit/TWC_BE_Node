@@ -50,8 +50,8 @@
    본래 이름 그대로 사용  
   
 2. feature  
-   `feature/{issue-number}-{feature-name}`  
-    ex) feature/2-build-gradle-script
+   `feature/{#issue-number}-{feature-name}`  
+    ex) feature/#2-build-gradle-script
    
 3. hotfix  
    `hotfix-{버전}`  
@@ -108,8 +108,47 @@ fix: Safari에서 모달을 띄웠을 때 스크롤 이슈 수정 (#123)
 </details>
 
 #### Issue Template
+```
+[type] 제목
+```  
+
+```
+## 📢 설명
+> 
+
+## ✅ 작업 내용
+- [x] 
+- [ ] 
+
+## 📍 참고 자료
+```
 
 #### PR Template
+```
+[type] 제목
+```
+
+```
+## #️⃣ 연관된 이슈
+
+> #이슈번호
+
+## 📝 작업 내용
+
+> 이번 PR에서 작업한 내용을 간략히 설명해주세요(이미지 첨부 가능)
+
+## 💬 리뷰 요구사항(선택)
+
+> 리뷰어가 특별히 봐주었으면 하는 부분이 있다면 작성해주세요
+>
+> ex) 메서드 XXX의 이름을 더 잘 짓고 싶은데 혹시 좋은 명칭이 있을까요?
+```  
+
+<details>
+  <summary>Git 협업 참고 자료</summary>
+    https://velog.io/@pgmjun/Github-%ED%98%91%EC%97%85-%EC%9D%B4%EA%B2%83%EB%A7%8C%EC%9D%80-%EC%95%8C%EC%9E%90-Issue-PR
+</details>
+
 
 ## 🧑‍💻 Developers
 <table>

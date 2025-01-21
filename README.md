@@ -50,8 +50,8 @@
    본래 이름 그대로 사용  
   
 2. feature  
-   `feature/{#issue-number}-{feature-name}`  
-    ex) feature/#2-build-gradle-script
+   `feat/{#issue-number}-{feature-name}`  
+    ex) feat/#2-build-gradle-script
    
 3. hotfix  
    `hotfix-{버전}`  

@@ -7,13 +7,13 @@
 ## 🔧 Tech Stack
 <img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black"> <img src="https://img.shields.io/badge/node.js-339933?style=for-the-badge&logo=Node.js&logoColor=white"> <img src="https://img.shields.io/badge/express-000000?style=for-the-badge&logo=express&logoColor=white"> <img src="https://img.shields.io/badge/prisma-2D3748?style=for-the-badge&logo=prisma&logoColor=white">  
 
-<img src="https://img.shields.io/badge/postgreSQL-4169E1?style=for-the-badge&logo=postgreSQL&logoColor=white"> <img src="https://img.shields.io/badge/redis-FF4438?style=for-the-badge&logo=redis&logoColor=white">  
+<img src="https://img.shields.io/badge/postgreSQL-4169E1?style=for-the-badge&logo=postgreSQL&logoColor=white"> <img src="https://img.shields.io/badge/redis-FF4438?style=for-the-badge&logo=redis&logoColor=white"> <img src="https://img.shields.io/badge/firebase-DD2C00?style=for-the-badge&logo=firebase&logoColor=white">
 
 <img src="https://img.shields.io/badge/amazon EC2-FF9900?style=for-the-badge&logo=amazon ec2&logoColor=white"> <img src="https://img.shields.io/badge/amazon rds-527FFF?style=for-the-badge&logo=amazon rds&logoColor=white"> <img src="https://img.shields.io/badge/amazon s3-569A31?style=for-the-badge&logo=amazon s3&logoColor=white"> <img src="https://img.shields.io/badge/github actions-2088FF?style=for-the-badge&logo=github actions&logoColor=white"> <img src="https://img.shields.io/badge/docker-2496ED?style=for-the-badge&logo=docker&logoColor=white"> <img src="https://img.shields.io/badge/render-000000?style=for-the-badge&logo=render&logoColor=white">  
 
 <img src="https://img.shields.io/badge/git-F05032?style=for-the-badge&logo=git&logoColor=white"> <img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=git&logoColor=white"> <img src="https://img.shields.io/badge/vscode-000000?style=for-the-badge&logo=vscode&logoColor=white"> 
 
-## 📜 Convention
+## 📜 Git Convention
 
 ### Branch
 | 브랜치 | 설명 |
@@ -107,33 +107,55 @@ fix: Safari에서 모달을 띄웠을 때 스크롤 이슈 수정 (#123)
 
 </details>
 
+#### Issue Template
+
+#### PR Template
 
 ## 🧑‍💻 Developers
 <table>
-  <tbody>
-    <tr>
-      <td align="center">
-        <a href="https://github.com/HSK021843">
-          <img src="https://avatars.githubusercontent.com/HSK021843" width="100px" alt="김형석" />
-          <br />
-          <sub><b>김형석</b></sub>
-        </a>
-      </td>
-      <td align="center">
-        <a href="https://github.com/rosejinse">
-          <img src="https://avatars.githubusercontent.com/rosejinse" width="100px" alt="진소은" />
-          <br />
-          <sub><b>진소은</b></sub>
-        </a>
-      </td>
-      <td align="center">
-        <a href="https://github.com/yjhss">
-          <img src="https://avatars.githubusercontent.com/yjhss" width="100px" alt="홍유진" />
-          <br />
-          <sub><b>홍유진</b></sub>
-        </a>
-      </td>
-    </tr>
-  </tbody>
+  <tr>
+    <!-- 사진 행 -->
+    <td align="center">
+      <a href="https://github.com/HSK021843">
+        <img src="https://avatars.githubusercontent.com/HSK021843" width="100px" alt="김형석" />
+      </a>
+    </td>
+    <td align="center">
+      <a href="https://github.com/rosejinse">
+        <img src="https://avatars.githubusercontent.com/rosejinse" width="100px" alt="진소은" />
+      </a>
+    </td>
+    <td align="center">
+      <a href="https://github.com/yjhss">
+        <img src="https://avatars.githubusercontent.com/yjhss" width="100px" alt="홍유진" />
+      </a>
+    </td>
+  </tr>
+  <tr>
+    <!-- 이름 행 -->
+    <td align="center"><b>김형석</b></td>
+    <td align="center"><b>진소은</b></td>
+    <td align="center"><b>홍유진</b></td>
+  </tr>
+  <tr>
+    <!-- 역할 행 -->
+    <td align="center">
+      <ul>
+        <li>로그인</li>
+        <li>스크랩</li>
+      </ul>
+    </td>
+    <td align="center">
+      <ul>
+        <li>인증(토큰)</li>
+        <li>키워드 및 뉴스</li>
+      </ul>
+    </td>
+    <td align="center">
+      <ul>
+        <li>회원가입</li>
+        <li>타임라인</li>
+      </ul>
+    </td>
+  </tr>
 </table>
-

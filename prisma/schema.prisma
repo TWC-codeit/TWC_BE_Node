@@ -13,7 +13,8 @@ model User {
   password  String
   name      String
   gender    Gender
-  birthDate DateTime
+  //birthDate DateTime @db.Date
+  birthDate String
   createdAt DateTime @default(now())
 
   @@map("users")  // 테이블 이름 'users'

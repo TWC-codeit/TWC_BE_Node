@@ -1,4 +1,5 @@
 const express = require('express');
+const { signupController } = require('./signup/signupController');
 const { loginController } = require('./login/loginController');
 
 const router = express.Router();
@@ -12,5 +13,8 @@ router.post('/logout', (req, res) => {
         return res.status(400).json({ message: '잘못된 요청입니다' });
     }
 });
+
+// 회원가입 라우트
+router.post('/signup', signupController);
 
 module.exports = router;

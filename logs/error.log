@@ -138,3 +138,35 @@ Invalid value for argument `birthDate`: premature end of input. Expected ISO-860
 [2025-01-22 22:07:53] ERROR: (500) Signup failed: createUser 실패
 [2025-01-22 22:26:42] ERROR: createUser failed: Cannot read properties of undefined (reading 'create')
 [2025-01-22 22:26:42] ERROR: (500) Signup failed: createUser 실패
+[2025-01-22 23:33:59] ERROR: createUser failed: 
+Invalid `prisma.user.create()` invocation in
+/Users/macpro/Projects/TWC_BE_Node/src/domains/auth/signup/signupRepository.js:15:36
+
+  12 const birthDateObject = new Date(SignupDto.birthDate);
+  13 
+  14 
+→ 15 const user = await prisma.user.create(
+Unique constraint failed on the fields: (`username`)
+[2025-01-22 23:33:59] ERROR: (500) Signup failed: createUser 실패
+[2025-01-22 23:34:30] ERROR: createUser failed: Cannot access 'user' before initialization
+[2025-01-22 23:34:30] ERROR: (500) Signup failed: createUser 실패
+[2025-01-22 23:35:36] ERROR: createUser failed: 
+Invalid `prisma.user.create()` invocation in
+/Users/macpro/Projects/TWC_BE_Node/src/domains/auth/signup/signupRepository.js:15:36
+
+  12 const birthDateObject = new Date(SignupDto.birthDate);
+  13 
+  14 
+→ 15 const user = await prisma.user.create(
+Unique constraint failed on the fields: (`username`)
+[2025-01-22 23:35:36] ERROR: (500) Signup failed: createUser 실패
+[2025-01-22 23:36:00] ERROR: createUser failed: 
+Invalid `prisma.user.create()` invocation in
+/Users/macpro/Projects/TWC_BE_Node/src/domains/auth/signup/signupRepository.js:15:36
+
+  12 const birthDateObject = new Date(SignupDto.birthDate);
+  13 
+  14 
+→ 15 const user = await prisma.user.create(
+Unique constraint failed on the fields: (`username`)
+[2025-01-22 23:36:00] ERROR: (500) Signup failed: createUser 실패

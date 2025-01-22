@@ -1,16 +1,11 @@
-//const prisma = require('../../../config/db');
-const { PrismaClient } = require('@prisma/client');
+const { prisma } = require('../../../config/db');
 const SignupDto = require('./signupDto');
 const logger = require('../../../config/logger');
 
-const prisma = new PrismaClient();
-
 const createUser = async (SignupDto) => {
   try {
-    console.log('SignupDto:', SignupDto);
-
+    
     const birthDateObject = new Date(SignupDto.birthDate);
-
 
     const user = await prisma.user.create({
       data: {

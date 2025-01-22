@@ -1,13 +1,24 @@
 const { body } = require('express-validator');
+const { prisma } = require('../../../config/db');
 
 const signupValidation = [
   body('username')
-    .isString()
-    .notEmpty()
-    .withMessage('Username is required.')
-    .isLength({ min: 4, max: 20 })
-    .withMessage('Username must be between 4 and 20 characters.'),
-  
+  .isString()
+  .notEmpty()
+  .withMessage('Username is required.')
+  .isLength({ min: 5, max: 20 })
+  .withMessage('Username must be between 5 and 20 characters.')
+  .custom(async (value) => {
+    // Prisma를 사용해 username 중복 확인
+    const existingUser = await prisma.user.findUnique({
+      where: { username: value },
+    });
+
+    if (existingUser) {
+      throw new Error('Username already exists. Please choose another.');
+    }
+  }),
+
   body('password')
     .isString()
     .notEmpty()

@@ -132,7 +132,7 @@ fix: Safari에서 모달을 띄웠을 때 스크롤 이슈 수정 (#123)
 
 #### PR Template
 ```
-[type] 제목
+type: 제목
 ```
 
 ```

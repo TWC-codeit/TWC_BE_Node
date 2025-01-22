@@ -1,0 +1,140 @@
+[2025-01-22 18:34:24] ERROR: Signup failed: signupValidation is not a function
+[2025-01-22 18:44:04] ERROR: (500) Signup failed: signupValidation is not a function
+[2025-01-22 19:24:01] ERROR: (500) Signup failed: logger is not defined
+[2025-01-22 19:25:07] ERROR: (500) Signup failed: err is not defined
+[2025-01-22 19:26:26] ERROR: (500) Signup failed: err is not defined
+[2025-01-22 19:28:04] ERROR: (500) Signup failed: err is not defined
+[2025-01-22 19:31:46] ERROR: (500) Signup failed: err is not defined
+[2025-01-22 19:32:14] ERROR: (500) Signup failed: err is not defined
+[2025-01-22 19:32:55] ERROR: Signup failed: Cannot read properties of undefined (reading 'create')
+[2025-01-22 19:32:55] ERROR: (500) Signup failed: 회원가입 실패
+[2025-01-22 19:33:39] ERROR: createUser failed: Cannot read properties of undefined (reading 'create')
+[2025-01-22 19:33:39] ERROR: (500) Signup failed: 회원가입 실패
+[2025-01-22 19:34:22] ERROR: createUser failed: Cannot read properties of undefined (reading 'create')
+[2025-01-22 19:34:22] ERROR: (500) Signup failed: createUser 실패
+[2025-01-22 19:44:34] ERROR: createUser failed: Cannot read properties of undefined (reading 'create')
+[2025-01-22 19:44:34] ERROR: (500) Signup failed: createUser 실패
+[2025-01-22 19:48:25] ERROR: createUser failed: Cannot read properties of undefined (reading 'create')
+[2025-01-22 19:48:25] ERROR: (500) Signup failed: createUser 실패
+[2025-01-22 19:50:27] ERROR: createUser failed: Cannot read properties of undefined (reading 'create')
+[2025-01-22 19:50:27] ERROR: (500) Signup failed: createUser 실패
+[2025-01-22 19:53:28] ERROR: createUser failed: Cannot read properties of undefined (reading 'create')
+[2025-01-22 19:53:28] ERROR: (500) Signup failed: createUser 실패
+[2025-01-22 20:42:07] ERROR: createUser failed: Cannot read properties of undefined (reading 'create')
+[2025-01-22 20:42:07] ERROR: (500) Signup failed: createUser 실패
+[2025-01-22 20:50:51] ERROR: createUser failed: Cannot read properties of undefined (reading 'create')
+[2025-01-22 20:50:51] ERROR: (500) Signup failed: createUser 실패
+[2025-01-22 20:52:17] ERROR: createUser failed: Cannot read properties of undefined (reading 'create')
+[2025-01-22 20:52:17] ERROR: (500) Signup failed: createUser 실패
+[2025-01-22 20:58:28] ERROR: createUser failed: Cannot read properties of undefined (reading 'create')
+[2025-01-22 20:58:28] ERROR: (500) Signup failed: createUser 실패
+[2025-01-22 21:11:38] ERROR: createUser failed: prisma is not defined
+[2025-01-22 21:11:38] ERROR: (500) Signup failed: createUser 실패
+[2025-01-22 21:12:17] ERROR: createUser failed: Cannot read properties of undefined (reading 'create')
+[2025-01-22 21:12:17] ERROR: (500) Signup failed: createUser 실패
+[2025-01-22 21:12:51] ERROR: createUser failed: Cannot read properties of undefined (reading 'create')
+[2025-01-22 21:12:51] ERROR: (500) Signup failed: createUser 실패
+[2025-01-22 21:13:46] ERROR: createUser failed: Cannot read properties of undefined (reading 'create')
+[2025-01-22 21:13:46] ERROR: (500) Signup failed: createUser 실패
+[2025-01-22 21:22:24] ERROR: createUser failed: 
+Invalid `prisma.user.create()` invocation in
+/Users/macpro/Projects/TWC_BE_Node/src/domains/auth/signup/signupRepository.js:12:36
+
+   9 try {
+  10   console.log('SignupDto:', SignupDto);
+  11 
+→ 12   const user = await prisma.user.create({
+         data: {
+           username: "testuser",
+           password: "$2a$10$v1lD9.LCLkwq73Ld7aqrP.igoiWEvb.zrGs8ldTT8ThZtliXLYvqG",
+           name: "김철수",
+           gender: "m",
+           birthDate: "2000-01-01"
+                      ~~~~~~~~~~~~
+         }
+       })
+
+Invalid value for argument `birthDate`: premature end of input. Expected ISO-8601 DateTime.
+[2025-01-22 21:22:24] ERROR: (500) Signup failed: createUser 실패
+[2025-01-22 21:25:59] ERROR: createUser failed: 
+Invalid `prisma.user.create()` invocation in
+/Users/macpro/Projects/TWC_BE_Node/src/domains/auth/signup/signupRepository.js:12:36
+
+   9 try {
+  10   console.log('SignupDto:', SignupDto);
+  11 
+→ 12   const user = await prisma.user.create({
+         data: {
+           username: "testuser",
+           password: "$2a$10$1qviZFPusYAeyrL5r2uYyuhJkYXPXB33/BD0132.M/KmelwebsFaS",
+           name: "김철수",
+           gender: "m",
+           birthDate: "2000-01-01"
+                      ~~~~~~~~~~~~
+         }
+       })
+
+Invalid value for argument `birthDate`: premature end of input. Expected ISO-8601 DateTime.
+[2025-01-22 21:25:59] ERROR: (500) Signup failed: createUser 실패
+[2025-01-22 21:26:25] ERROR: createUser failed: 
+Invalid `prisma.user.create()` invocation in
+/Users/macpro/Projects/TWC_BE_Node/src/domains/auth/signup/signupRepository.js:12:36
+
+   9 try {
+  10   console.log('SignupDto:', SignupDto);
+  11 
+→ 12   const user = await prisma.user.create({
+         data: {
+           username: "testuser",
+           password: "$2a$10$.QNKEyRNrouwP9cC0c3p7.Tq0BjJDQQ3462JO2tkixXjmkQ3zHuxa",
+           name: "김철수",
+           gender: "m",
+           birthDate: "2000-01-01"
+                      ~~~~~~~~~~~~
+         }
+       })
+
+Invalid value for argument `birthDate`: premature end of input. Expected ISO-8601 DateTime.
+[2025-01-22 21:26:25] ERROR: (500) Signup failed: createUser 실패
+[2025-01-22 21:32:33] ERROR: createUser failed: 
+Invalid `prisma.user.create()` invocation in
+/Users/macpro/Projects/TWC_BE_Node/src/domains/auth/signup/signupRepository.js:12:36
+
+   9 try {
+  10   console.log('SignupDto:', SignupDto);
+  11 
+→ 12   const user = await prisma.user.create({
+         data: {
+           username: "testuser",
+           password: "$2a$10$EfhliQK/1XJOGmswdQc7Jen3ctw1hOYGXyyIz2hZrwiqcEmf.UH2e",
+           name: "김철수",
+           gender: "m",
+           birthDate: "2000-01-01"
+                      ~~~~~~~~~~~~
+         }
+       })
+
+Invalid value for argument `birthDate`: premature end of input. Expected ISO-8601 DateTime.
+[2025-01-22 21:32:33] ERROR: (500) Signup failed: createUser 실패
+[2025-01-22 22:07:53] ERROR: createUser failed: 
+Invalid `prisma.user.create()` invocation in
+/Users/macpro/Projects/TWC_BE_Node/src/domains/auth/signup/signupRepository.js:15:36
+
+  12 //const birthDateObject = new Date(SignupDto.birthDate);
+  13 
+  14 
+→ 15 const user = await prisma.user.create({
+       data: {
+         username: "testuser5",
+         password: "$2a$10$7Gjc7.z54j3J5TLhGbU6L.Olv0fZgnMZJ9FrRFAm5F5Q4G/MVedZS",
+         name: "사아자",
+         gender: "m",
+         birthDate: "1996-05-05"
+                    ~~~~~~~~~~~~
+       }
+     })
+
+Invalid value for argument `birthDate`: premature end of input. Expected ISO-8601 DateTime.
+[2025-01-22 22:07:53] ERROR: (500) Signup failed: createUser 실패
+[2025-01-22 22:26:42] ERROR: createUser failed: Cannot read properties of undefined (reading 'create')
+[2025-01-22 22:26:42] ERROR: (500) Signup failed: createUser 실패

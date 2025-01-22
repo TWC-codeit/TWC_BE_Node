@@ -1,3 +1,9 @@
 node_modules
 # Keep environment variables out of version control
 .env
+
+# IDE 설정 폴더 추적 제외
+.idea
+
+# public 폴더 추적 제외
+public/

@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const authRouter = require('./domains/auth/authRoutes');
+const scrapRouter = require('./domains/scrap/scrapRoutes');
 const cors = require('cors');
 const errorHandler = require('./shared/middlewares/errorHandler');
 
@@ -13,4 +14,8 @@ app.use(errorHandler);
 // API 엔드포인트
 app.use('/api/auth', authRouter);
 
+// Scrap Endpoint
+app.use('/api/scrap', scrapRouter);
+
 module.exports = app;
+

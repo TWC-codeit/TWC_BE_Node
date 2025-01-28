@@ -15,7 +15,7 @@ app.use(errorHandler);
 app.use('/api/auth', authRouter);
 
 // Scrap Endpoint
-app.use('/api/scrap', scrapRouter);
+app.use('/api/scraps', scrapRouter);
 
 module.exports = app;
 

@@ -12,9 +12,9 @@ async function getScraps(req, res) {
     try {
         const scraps = await scrapService.getAllScrap(userId);
 
-        res.status(201).json(scraps);
+        res.status(200).json({ scraps: scraps });
     } catch (error) {
-        res.status(400).send('No scraps found')
+        res.status(400).json({ error: '기사 스크랩을 하지 않은 사용자입니다.' });
     }
 }
 

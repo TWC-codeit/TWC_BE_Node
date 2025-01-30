@@ -7,6 +7,7 @@ async function createScrap(req, res) {
 }
 
 async function getScraps(req, res) {
+    const userId = req.user.id;
 
     try {
         const scraps = await scrapService.getAllScrap(userId);

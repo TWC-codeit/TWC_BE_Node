@@ -1,10 +1,13 @@
 const express = require('express');
 const { createScrap, deleteScrap, getScraps } = require('./controller/scrapController')
+const { authMiddleware } = require("../../shared/middlewares/authMiddleware");
 
 const router = express.Router();
 
-router.get('/', createScrap);
-router.post('/', deleteScrap);
-router.delete('/:id', getScraps);
+router.use(authMiddleware);
+
+router.get('/', getScraps);
+router.post('/', createScrap);
+router.delete('/:id', deleteScrap);
 
 module.exports = router;

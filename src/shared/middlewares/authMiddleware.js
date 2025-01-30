@@ -1,14 +1,14 @@
 // src/shared/middlewares/authMiddleware.js
 
 // JWT 토큰 검증 유틸리티와 환경 변수를 가져옵니다.
-import { verifyToken } from '../../domains/auth/login/tokenUtils.js';
-import { env } from '../../config/env.js';
+const { verifyToken } = require('../../domains/auth/common/jwtUtils');
+const { env } = require('../../config/env');
 
 /**
  * 인증 미들웨어
  * Authorization 헤더의 토큰을 검증하고 사용자 정보를 요청 객체에 추가
  */
-export const authMiddleware = (req, res, next) => {
+const authMiddleware = (req, res, next) => {
   // Authorization 헤더에서 토큰 추출
   const token = req.headers.authorization?.split(' ')[1];
   if (!token) {
@@ -25,3 +25,7 @@ export const authMiddleware = (req, res, next) => {
   req.user = decoded;
   next(); // 다음 미들웨어 또는 라우터로 이동
 };
+
+module.exports = {
+  authMiddleware,
+}

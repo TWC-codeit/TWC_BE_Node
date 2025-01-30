@@ -19,7 +19,7 @@ const findById = async (id) => {
 };
 
 // 타임라인 목록 조회
-const findAll = async (userId) => {
+const findByUserId = async (userId) => {
   return await prisma.timeline.findMany({
     where: { userId },
   });
@@ -35,6 +35,6 @@ const deleteById = async (id) => {
 module.exports = {
   create,
   findById,
-  findAll,
+  findByUserId,
   deleteById,
 };

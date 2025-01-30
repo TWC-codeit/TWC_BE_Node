@@ -16,7 +16,7 @@ async function main() {
   await prisma.$executeRaw`TRUNCATE TABLE "scraps" RESTART IDENTITY CASCADE`;
   await prisma.$executeRaw`TRUNCATE TABLE "timeline_items" RESTART IDENTITY CASCADE`;
   await prisma.$executeRaw`TRUNCATE TABLE "timelines" RESTART IDENTITY CASCADE`;
-  
+
   // 2. 여러 User 더미 데이터 생성 (id는 자동 생성됨)
   const users = await prisma.user.createMany({
     data: [
@@ -59,7 +59,45 @@ async function main() {
         articleId: article.id,
       }))
     });
+
+  // 5. 타임라인 생성 (각 유저당 2~4개의 타임라인)
+  const numTimelines = Math.floor(Math.random() * 3) + 2; // 2~4개의 타임라인 생성
+  const timelines = [];
+
+  for (let i = 1; i <= numTimelines; i++) {
+    const newTimeline = await prisma.timeline.create({
+      data: {
+        userId: user.id,
+        name: `${user.name}의 타임라인 ${i}`, // 여러 개의 타임라인을 구별할 수 있도록 숫자 추가
+      }
+    });
+    timelines.push(newTimeline);
   }
+
+  // 6. 타임라인 아이템 생성 (사용자가 스크랩한 기사만 추가)
+  let position = 1;
+  for (const article of randomArticles) {
+    const scrap = await prisma.scrap.findFirst({
+      where: {
+        userId: user.id,
+        articleId: article.id
+      }
+    });
+
+    if (scrap) {
+      // 랜덤한 타임라인을 선택하여 추가
+      const randomTimeline = timelines[Math.floor(Math.random() * timelines.length)];
+
+      await prisma.timelineItem.create({
+        data: {
+          timelineId: randomTimeline.id, // 랜덤한 타임라인 선택
+          scrapId: scrap.id,
+          position: position++,
+        }
+      });
+    }
+  }
+}
 
   console.log('더미 데이터 생성 완료!');
 }

@@ -121,7 +121,29 @@ const deleteTimeline = async (userId, timelineId) => {
   }
 };
 
+// 타임라인 목록 조회
+const getTimelines = async (userId) => {
+  logger.info(`Retrieving timelines for user: ${userId}`);
+
+  try {
+    const timelines = await timelineRepository.findByUserId(userId);
+    
+    if (timelines.length === 0) {
+      logger.info(`No timelines found for user: ${userId}`);
+    } else {
+      logger.info(`Successfully retrieved ${timelines.length} timelines for user: ${userId}`);
+    }
+
+    return timelines;
+  } catch (error) {
+    logger.error(`Error retrieving timelines for user: ${userId}, Error: ${error.message}`);
+    throw error; 
+  }
+};
+
+
 module.exports = {
   createTimeline,
   deleteTimeline,
+  getTimelines,
 };

@@ -36,7 +36,23 @@ const deleteTimeline = async (req, res) => {
   }
 };
 
+// 타임라인 목록 조회
+const getTimelines = async (req, res) => {
+  try {
+    const userId = req.user.id;
+
+    logger.info(`Received request to fetch timelines for user: ${userId}`);
+
+    const timelines = await timelineService.getTimelines(userId);
+    return res.status(200).json( { timelines });
+  } catch (error) {
+    logger.error(`Failed to fetch timelines: ${error.message}`);
+    return res.status(500).send('Error fetching timelines');
+  }
+};
+
 module.exports = {
   createTimeline,
   deleteTimeline,
+  getTimelines,
 };

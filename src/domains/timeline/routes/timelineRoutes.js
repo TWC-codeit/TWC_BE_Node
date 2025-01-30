@@ -19,4 +19,10 @@ router.delete('/:timelineId', (req, res, next) => {
   next();
 }, timelineController.deleteTimeline);
 
+// 타임라인 목록 조회
+router.get('/', (req, res, next) => {
+  logger.info('타임라인 목록 조회 요청');
+  next();
+}, timelineController.getTimelines);
+
 module.exports = router;

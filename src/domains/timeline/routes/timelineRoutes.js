@@ -13,4 +13,10 @@ router.post('/', (req, res, next) => {
   next(); // 다음 미들웨어로 넘김
 }, timelineController.createTimeline);
 
+// 타임라인 삭제
+router.delete('/:timelineId', (req, res, next) => {
+  logger.info('타임라인 삭제 요청');
+  next();
+}, timelineController.deleteTimeline);
+
 module.exports = router;

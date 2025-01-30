@@ -13,14 +13,30 @@ const createTimeline = async (req, res) => {
 
     logger.info(`Successfully created timeline: ${newTimeline.id}`);
 
-    res.status(201).json(newTimeline);
+    return res.status(201).json(newTimeline);
   } catch (error) {
     logger.error(`Error creating timeline: ${error.message}`);
+    return res.status(500).send('Error creating timeline');
+  }
+};
 
-    res.status(500).send('Error creating timeline');
+// 타임라인 삭제
+const deleteTimeline = async (req, res) => {
+  try {
+    const userId = req.user.id;    
+    const { timelineId } = req.params;
+
+    logger.info(`Received request to delete timeline: userId = ${userId}, timelineId = ${timelineId}`);
+
+    const result = await timelineService.deleteTimeline(userId, timelineId);
+    return res.status(200).json(result);
+  } catch (error) {
+    logger.error(`Error deleting timeline: ${error.message}`);
+    return res.status(500).send('Error deleting timeline');
   }
 };
 
 module.exports = {
   createTimeline,
+  deleteTimeline,
 };

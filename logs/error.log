@@ -232,3 +232,48 @@ Unknown argument `scrapId`. Available options are marked with ?.
 [2025-01-30 14:46:49] ERROR: Error creating timeline: Positions must be continuous and start from 1.
 [2025-01-30 14:47:18] ERROR: Error creating timeline: Positions must be continuous and start from 1.
 [2025-01-30 14:47:36] ERROR: Error creating timeline: Positions must be continuous and start from 1.
+[2025-01-30 15:23:11] ERROR: Error deleting timeline 1: 
+Invalid `prisma.timeline.findUnique()` invocation in
+/Users/macpro/Projects/TWC_BE_Node/src/domains/timeline/repository/timelineRepository.js:16:32
+
+  13 
+  14 // 타임라인 조회
+  15 const findById = async (id) => {
+→ 16   return await prisma.timeline.findUnique({
+         where: {
+           id: "1"
+               ~~~
+         }
+       })
+
+Argument `id`: Invalid value provided. Expected Int, provided String.
+[2025-01-30 15:26:56] ERROR: Error deleting timeline 1: 
+Invalid `prisma.timelineItem.deleteMany()` invocation in
+/Users/macpro/Projects/TWC_BE_Node/src/domains/timeline/repository/timelineItemRepository.js:23:36
+
+  20 
+  21 const deleteByTimelineId = async (timelineId) => {
+  22   // 주어진 timelineId에 해당하는 모든 타임라인 아이템 삭제
+→ 23   return await prisma.timelineItem.deleteMany({
+         where: {
+           timelineId: "1"
+                       ~~~
+         }
+       })
+
+Argument `timelineId`: Invalid value provided. Expected IntFilter or Int, provided String.
+[2025-01-30 15:29:02] ERROR: Error deleting timeline 1: 
+Invalid `prisma.timeline.delete()` invocation in
+/Users/macpro/Projects/TWC_BE_Node/src/domains/timeline/repository/timelineRepository.js:30:38
+
+  27 
+  28 // 타임라인 삭제
+  29 const deleteById = async (id) => {
+→ 30   return await prisma.timeline.delete({
+         where: {
+           id: "1"
+               ~~~
+         }
+       })
+
+Argument `id`: Invalid value provided. Expected Int, provided String.

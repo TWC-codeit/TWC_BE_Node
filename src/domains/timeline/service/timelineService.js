@@ -96,6 +96,32 @@ const createTimeline = async (userId, name, items) => {
   }
 };
 
+// 타임라인 삭제
+const deleteTimeline = async (userId, timelineId) => {
+  try {
+    // 타임라인 존재 여부 확인
+    const timeline = await timelineRepository.findById(timelineId);
+    if (!timeline || timeline.userId !== userId) {
+      logger.error(`Timeline not found or user does not have permission to delete timeline ${timelineId}`);
+      throw new Error('Timeline not found or user does not have permission');
+    }
+
+    // 타임라인 아이템 삭제
+    await timelineItemRepository.deleteByTimelineId(timelineId);
+    logger.info(`Successfully deleted timeline items for timeline ${timelineId}`);
+
+    // 타임라인 삭제
+    await timelineRepository.deleteById(timelineId);
+    logger.info(`Successfully deleted timeline ${timelineId} for user ${userId}`);
+
+    return { message: 'Timeline has been successfully deleted.' };
+  } catch (error) {
+    logger.error(`Error deleting timeline ${timelineId}: ${error.message}`);
+    throw error;
+  }
+};
+
 module.exports = {
   createTimeline,
+  deleteTimeline,
 };

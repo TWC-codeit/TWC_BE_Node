@@ -14,7 +14,7 @@ const create = async ({ name, userId }) => {
 // 타임라인 조회
 const findById = async (id) => {
   return await prisma.timeline.findUnique({
-    where: { id },
+    where: { id: parseInt(id) },
   });
 };
 
@@ -28,7 +28,7 @@ const findAll = async (userId) => {
 // 타임라인 삭제
 const deleteById = async (id) => {
   return await prisma.timeline.delete({
-    where: { id },
+    where: { id: parseInt(id) },
   });
 };
 

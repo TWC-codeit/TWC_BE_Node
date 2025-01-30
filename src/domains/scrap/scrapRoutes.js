@@ -1,5 +1,5 @@
 const express = require('express');
-const { createScrap, deleteScrap, getScraps } = require('./scrapController')
+const { createScrap, deleteScrap, getScraps } = require('./controller/scrapController')
 
 const router = express.Router();
 

@@ -35,22 +35,39 @@ const fetchArticlesByKeyword = async (keyword) => {
   }
 };
 
-const fetchArticleCounts = async (keyword) => {
-  console.log(`[fetchArticleCounts] Redis에서 조회 - keyword: ${keyword}`); // 로그 추가 ✅
+const fetchArticleCounts = async (field) => {
+  const key = "keyword:stats";
 
   try {
-    const redisKey = `keyword:stats:${keyword}`; // 🔥 키워드 포함된 키 생성
-    console.log(`[fetchArticleCounts] Redis Key: ${redisKey}`); // 로그 추가 ✅
-    const temp = redisClient.get(redisKey);
-    console.log(temp);
-    const count = await redisClient.hGet(redisKey, keyword);
-    console.log(`[fetchArticleCounts] 조회 결과: ${count}`); // 로그 추가 ✅
+    // 키 존재 여부 확인
+    const exists = await redisClient.exists(key);
+    if (!exists) {
+      console.log(`Key does not exist: ${key}`);
+      return null;
+    }
 
-    return count ? parseInt(count, 10) : null;
-  } catch (error) {
-    console.error("[fetchArticleCounts] Redis 조회 에러 ❌", error.message);
-    throw new Error("Failed to fetch article count");
+    // 키의 데이터 타입 확인
+    const type = await redisClient.type(key);
+
+    let data = null;
+    if (type === "hash") {
+      // 특정 필드 값 조회
+      data = await redisClient.hGet(key, field);
+      if (!data) {
+        console.log(`Field does not exist: ${field}`);
+        return null;
+      }
+    } else {
+      throw new Error(`Unsupported data type: ${type}`);
+    }
+
+    return data;
+  } catch (err) {
+    console.error("Error fetching article counts:", err);
+    throw err;
   }
 };
+
+
 
 module.exports = { fetchArticlesByKeyword, fetchArticleCounts };

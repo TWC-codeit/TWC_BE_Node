@@ -20,6 +20,7 @@ const getArticlesByKeyword = async (req, res) => {
 
 const getArticleCounts = async (req, res) => {
   const { keyword } = req.params;
+  console.log('개수 조회 키워드: ', keyword);
 
   if (!keyword) {
     return res.status(400).json({ error: "Keyword is required" });

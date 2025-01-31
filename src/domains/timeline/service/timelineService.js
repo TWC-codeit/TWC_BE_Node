@@ -98,12 +98,14 @@ const createTimeline = async (userId, name, items) => {
 
 // 타임라인 삭제
 const deleteTimeline = async (userId, timelineId) => {
+  logger.info(`Deleting a timeline with ID: ${timelineId} for user: ${userId}`);
+
   try {
-    // 타임라인 존재 여부 확인
+    // 해당 타임라인이 존재하는지, 해당 사용자의 것인지 확인
     const timeline = await timelineRepository.findById(timelineId);
     if (!timeline || timeline.userId !== userId) {
-      logger.error(`Timeline not found or user does not have permission to delete timeline ${timelineId}`);
-      throw new Error('Timeline not found or user does not have permission');
+      logger.warn(`Timeline with ID: ${timelineId} not found or unauthorized for user: ${userId}`);
+      return null;
     }
 
     // 타임라인 아이템 삭제
@@ -113,8 +115,7 @@ const deleteTimeline = async (userId, timelineId) => {
     // 타임라인 삭제
     await timelineRepository.deleteById(timelineId);
     logger.info(`Successfully deleted timeline ${timelineId} for user ${userId}`);
-
-    return { message: 'Timeline has been successfully deleted.' };
+    return true;
   } catch (error) {
     logger.error(`Error deleting timeline ${timelineId}: ${error.message}`);
     throw error;
@@ -141,9 +142,28 @@ const getTimelines = async (userId) => {
   }
 };
 
+// 특정 타임라인 조회
+const getTimelineById = async (timelineId, userId) => {
+  logger.info(`Retrieving timeline with ID: ${timelineId} for user: ${userId}`);
+
+  try {
+    const timeline = await timelineRepository.findById(timelineId, userId); // 사용자와 관련된 타임라인만 조회
+
+    if (!timeline) {
+      return null; // 타임라인이 없으면 null 반환
+    }
+
+    logger.info(`Successfully retrieved timeline with ID: ${timelineId} for user: ${userId}`);
+    return timeline;
+  } catch (error) {
+    logger.error(`Error retrieving timeline with ID: ${timelineId} for user: ${userId}, Error: ${error.message}`);
+    throw error;
+  }
+};
 
 module.exports = {
   createTimeline,
   deleteTimeline,
   getTimelines,
+  getTimelineById,
 };

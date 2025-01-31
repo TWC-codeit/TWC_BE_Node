@@ -25,4 +25,10 @@ router.get('/', (req, res, next) => {
   next();
 }, timelineController.getTimelines);
 
+// 특정 타임라인 조회
+router.get('/:timelineId', (req, res, next) => {
+  logger.info('특정 타임라인 조회 요청');
+  next();
+}, timelineController.getTimelineById);
+
 module.exports = router;

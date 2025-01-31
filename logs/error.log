@@ -277,3 +277,93 @@ Invalid `prisma.timeline.delete()` invocation in
        })
 
 Argument `id`: Invalid value provided. Expected Int, provided String.
+[2025-01-31 20:59:51] ERROR: Error retrieving timeline with ID: 4 for user: 4, Error: 
+Invalid `prisma.timeline.findFirst()` invocation in
+/Users/macpro/Projects/TWC_BE_Node/src/domains/timeline/repository/timelineRepository.js:16:32
+
+  13 
+  14 // 타임라인 조회
+  15 const findById = async (id, userId) => {
+→ 16   return await prisma.timeline.findFirst({
+         where: {
+           id: 4,
+           userId: 4
+         },
+         include: {
+           timelineItems: true,
+           ~~~~~~~~~~~~~
+       ?   user?: true,
+       ?   items?: true
+         }
+       })
+
+Unknown field `timelineItems` for include statement on model `Timeline`. Available options are marked with ?.
+[2025-01-31 20:59:51] ERROR: Failed to retrieve timeline with ID: 4 for user: 4, Error: 
+Invalid `prisma.timeline.findFirst()` invocation in
+/Users/macpro/Projects/TWC_BE_Node/src/domains/timeline/repository/timelineRepository.js:16:32
+
+  13 
+  14 // 타임라인 조회
+  15 const findById = async (id, userId) => {
+→ 16   return await prisma.timeline.findFirst({
+         where: {
+           id: 4,
+           userId: 4
+         },
+         include: {
+           timelineItems: true,
+           ~~~~~~~~~~~~~
+       ?   user?: true,
+       ?   items?: true
+         }
+       })
+
+Unknown field `timelineItems` for include statement on model `Timeline`. Available options are marked with ?.
+[2025-01-31 21:00:08] ERROR: Error retrieving timeline with ID: 10 for user: 4, Error: 
+Invalid `prisma.timeline.findFirst()` invocation in
+/Users/macpro/Projects/TWC_BE_Node/src/domains/timeline/repository/timelineRepository.js:16:32
+
+  13 
+  14 // 타임라인 조회
+  15 const findById = async (id, userId) => {
+→ 16   return await prisma.timeline.findFirst({
+         where: {
+           id: 10,
+           userId: 4
+         },
+         include: {
+           timelineItems: true,
+           ~~~~~~~~~~~~~
+       ?   user?: true,
+       ?   items?: true
+         }
+       })
+
+Unknown field `timelineItems` for include statement on model `Timeline`. Available options are marked with ?.
+[2025-01-31 21:00:08] ERROR: Failed to retrieve timeline with ID: 10 for user: 4, Error: 
+Invalid `prisma.timeline.findFirst()` invocation in
+/Users/macpro/Projects/TWC_BE_Node/src/domains/timeline/repository/timelineRepository.js:16:32
+
+  13 
+  14 // 타임라인 조회
+  15 const findById = async (id, userId) => {
+→ 16   return await prisma.timeline.findFirst({
+         where: {
+           id: 10,
+           userId: 4
+         },
+         include: {
+           timelineItems: true,
+           ~~~~~~~~~~~~~
+       ?   user?: true,
+       ?   items?: true
+         }
+       })
+
+Unknown field `timelineItems` for include statement on model `Timeline`. Available options are marked with ?.
+[2025-01-31 21:43:01] ERROR: Unauthorized attempt or timeline not found: userId = 4, timelineId = 1
+[2025-01-31 22:03:03] ERROR: Unauthorized attempt or timeline not found: userId = 1, timelineId = 15
+[2025-01-31 22:03:13] ERROR: Unauthorized attempt or timeline not found: userId = 1, timelineId = 13
+[2025-01-31 22:03:28] ERROR: Unauthorized attempt or timeline not found: userId = 1, timelineId = 13
+[2025-01-31 22:03:42] ERROR: Unauthorized attempt or timeline not found: userId = 1, timelineId = 13
+[2025-01-31 22:03:45] ERROR: Unauthorized attempt or timeline not found: userId = 1, timelineId = 15

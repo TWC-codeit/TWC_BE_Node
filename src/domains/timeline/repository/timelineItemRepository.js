@@ -25,7 +25,7 @@ const deleteByTimelineId = async (timelineId) => {
   });
 };
 
-// 타임라인 아이템 업데이트
+// 타임라인 아이템 position 업데이트
 const updatePosition = async (id, position) => {
   return await prisma.timelineItem.update({
     where: { id },

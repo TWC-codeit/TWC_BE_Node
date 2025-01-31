@@ -12,9 +12,15 @@ const create = async ({ name, userId }) => {
 };
 
 // 타임라인 조회
-const findById = async (id) => {
-  return await prisma.timeline.findUnique({
-    where: { id: parseInt(id) },
+const findById = async (id, userId) => {
+  return await prisma.timeline.findFirst({
+    where: { 
+      id: parseInt(id),
+      userId: userId,
+    },
+    include: {
+      items: true,
+    }
   });
 };
 

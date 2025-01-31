@@ -7,7 +7,7 @@ async function createScrap(req, res) {
         const { articleId } = req.body;
         const createdScrap = await scrapService.createScrap(userId, articleId);
 
-        res.status(200).json(createdScrap);
+        res.status(201).json(createdScrap);
     } catch (error) {
         res.status(400).json({ error: "스크랩에 실패했습니다." });
     }

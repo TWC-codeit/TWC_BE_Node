@@ -28,12 +28,20 @@ const createScrap = async (userId, articleId) => {
             userId: userId,
             articleId: articleId,
         },
+
+        include: {
+            articles: {
+                select: {
+                    title: true,
+                },
+            },
+        },
     });
 
     return {
         id: newScrap.id,
         articleId: newScrap.articleId,
-        title: article.title,
+        title: newScrap.articles.title,
         scrapedAt: newScrap.createdAt,
     }
 }

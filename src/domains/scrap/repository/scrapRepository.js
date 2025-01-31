@@ -1,4 +1,43 @@
 const { prisma } = require("../../../config/db");
+const {error} = require("winston");
+
+const createScrap = async (userId, articleId) => {
+    const isExistArticle = await prisma.articles.findUnique({
+        where: {
+            id: articleId,
+        }
+    });
+
+    if (!isExistArticle) {
+        throw new Error('존재하지 않는 기사입니다.');
+    }
+
+    const isExistScrap = await prisma.scraps.findFirst({
+        where: {
+            userId: userId,
+            articleId: articleId,
+        },
+    });
+
+    if (isExistScrap) {
+        throw new Error('이미 스크랩한 기사입니다.');
+    }
+
+    const newScrap = await prisma.scraps.create({
+        data: {
+            userId: userId,
+            articleId: articleId,
+        },
+    });
+
+    return {
+        id: newScrap.id,
+        articleId: newScrap.articleId,
+        title: article.title,
+        scrapedAt: newScrap.createdAt,
+    }
+}
+
 
 const getAllScraps = async (userId) => {
     const scraps = await prisma.scraps.findMany({
@@ -49,6 +88,7 @@ const deleteScrap = async (userId, scrapId) => {
 }
 
 module.exports = {
+    createScrap,
     getAllScraps,
     deleteScrap,
 };

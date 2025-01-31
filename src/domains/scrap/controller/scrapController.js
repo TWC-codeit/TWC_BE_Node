@@ -2,7 +2,15 @@ const { client } = require('../../../config/redis');
 const scrapService = require('../service/scrapService')
 
 async function createScrap(req, res) {
-    console.log('스크랩 생성 API');
+    try {
+        const userId = req.user.id;
+        const { articleId } = req.body;
+        const createdScrap = await scrapService.createScrap(userId, articleId);
+
+        res.status(200).json(createdScrap);
+    } catch (error) {
+        res.status(400).json({ error: "스크랩에 실패했습니다." });
+    }
 
 }
 

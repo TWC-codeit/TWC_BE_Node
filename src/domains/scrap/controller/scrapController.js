@@ -19,7 +19,20 @@ async function getScraps(req, res) {
 }
 
 async function deleteScrap(req, res) {
-    console.log('스크랩 삭제 API');
+    try {
+        const userId = req.user.id;
+        const scrapId = parseInt(req.params.id, 10);
+
+        if (isNaN(scrapId)) {
+            return res.status(400).json({ error: '유효한 스크랩 ID가 아닙니다.' });
+        }
+
+        await scrapService.deleteSelectedScrap(userId, scrapId);
+
+        res.status(200).json({ message: '스크랩이 삭제되었습니다.' });
+    } catch (error) {
+        res.status(400).json({ error: "스크랩을 찾을 수 없습니다." })
+    }
 }
 
 module.exports = {

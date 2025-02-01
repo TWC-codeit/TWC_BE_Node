@@ -1,5 +1,4 @@
 const { prisma } = require("../../../config/db");
-const {error} = require("winston");
 
 const createScrap = async (userId, articleId) => {
     const isExistArticle = await prisma.articles.findUnique({
@@ -45,7 +44,6 @@ const createScrap = async (userId, articleId) => {
         scrapedAt: newScrap.createdAt,
     }
 }
-
 
 const getAllScraps = async (userId) => {
     const scraps = await prisma.scraps.findMany({

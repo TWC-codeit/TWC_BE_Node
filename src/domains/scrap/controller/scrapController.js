@@ -4,10 +4,18 @@ const scrapService = require('../service/scrapService')
 async function createScrap(req, res) {
     try {
         const userId = req.user.id;
-        const { articleId } = req.body;
-        const createdScrap = await scrapService.createScrap(userId, articleId);
 
-        res.status(201).json(createdScrap);
+        if (req.body.articleId) {
+            const { articleId } = req.body;
+            const createdScrap = await scrapService.createScrap(userId, articleId);
+            res.status(201).json(createdScrap);
+        } else if (req.body.redisKey) {
+            const { redisKey, index}  = req.body;
+            const createdScrap = await scrapService.createScrapFromRedis(userId, redisKey, index);
+            res.status(201).json(createdScrap);
+        } else {
+            res.status(400).json({ error: "필수 정보가 누락되었습니다." });
+        }
     } catch (error) {
         res.status(400).json({ error: "스크랩에 실패했습니다." });
     }

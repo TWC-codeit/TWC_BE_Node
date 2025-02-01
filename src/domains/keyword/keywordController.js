@@ -1,4 +1,4 @@
-const { fetchArticlesByKeyword, fetchArticlesByCompany, fetchArticleCounts } = require("./keywordService");
+const { fetchArticlesByKeyword, fetchArticlesByCompany, fetchArticleCounts, fetchKeywords } = require("./keywordService");
 const redis = require("../../config/redis.js"); // Redis 클라이언트 불러오기
 
 const getArticlesByKeyword = async (req, res) => {
@@ -60,4 +60,15 @@ const getArticleCounts = async (req, res) => {
   }
 };
 
-module.exports = { getArticlesByKeyword, getArticlesByCompany, getArticleCounts };
+const getKeywords = async (req, res) => {
+  try {
+    const keywords = await fetchKeywords();
+    res.status(200).json({ keywords });
+  } catch (error) {
+    console.error('Error fetching keywords:', error.message);
+    res.status(500).json({ error: 'Failed to fetch keywords' });
+  }
+};
+
+
+module.exports = { getArticlesByKeyword, getArticlesByCompany, getArticleCounts, getKeywords };

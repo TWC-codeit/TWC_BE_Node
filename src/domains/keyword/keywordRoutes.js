@@ -1,5 +1,5 @@
 const express = require('express');
-const { getArticlesByKeyword, getArticlesByCompany, getArticleCounts } = require('./keywordController.js');
+const { getArticlesByKeyword, getArticlesByCompany, getArticleCounts, getKeywords } = require('./keywordController.js');
 
 const router = express.Router();
 
@@ -12,5 +12,7 @@ router.get('/articles/:keyword', getArticlesByKeyword);
 
 router.get('/articles/:keyword/:company', getArticlesByCompany);
 
+// 키워드 50개 조회
+router.get('/keywords', getKeywords);
 
 module.exports = router;

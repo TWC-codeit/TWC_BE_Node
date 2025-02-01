@@ -1,4 +1,5 @@
 const scrapRepository = require('../repository/scrapRepository');
+const articleRepository = require('../repository/articleRepository');
 const { prisma } = require("../../../config/db");
 const { PutObjectCommand } = require("@aws-sdk/client-s3");
 const fetch = require("node-fetch");
@@ -49,17 +50,7 @@ const createScrapFromRedis = async (userId, redisKey, index = 0) => {
     }
 
     const kwd = redisKey.split(":")[1]
-    const createdArticle = await prisma.articles.create({
-        data: {
-            keyword: kwd,
-            title: articleData.title,
-            publishedAt: new Date(articleData.write_time),
-            source: articleData.company,
-            content: articleData.short_content,
-            imageUrl: s3Url,
-            url: articleData.link,
-        },
-    });
+    const createdArticle = await articleRepository.createArticle(articleData, s3Url, kwd);
     console.log("기사를 저장했습니다.");
 
     const newScrap = await prisma.scraps.create({
@@ -73,6 +64,7 @@ const createScrapFromRedis = async (userId, redisKey, index = 0) => {
             }
         },
     });
+
     return {
         id: newScrap.id,
         articleId: newScrap.articleId,

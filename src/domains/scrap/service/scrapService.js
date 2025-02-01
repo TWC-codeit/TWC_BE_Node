@@ -48,9 +48,10 @@ const createScrapFromRedis = async (userId, redisKey, index = 0) => {
         s3Url = null;
     }
 
+    const kwd = redisKey.split(":")[1]
     const createdArticle = await prisma.articles.create({
         data: {
-            keyword: "default",
+            keyword: kwd,
             title: articleData.title,
             publishedAt: new Date(articleData.write_time),
             source: articleData.company,

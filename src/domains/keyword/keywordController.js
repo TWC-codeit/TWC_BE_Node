@@ -1,4 +1,4 @@
-const { fetchArticlesByKeyword, fetchArticleCounts } = require("./keywordService");
+const { fetchArticlesByKeyword, fetchArticlesByCompany, fetchArticleCounts } = require("./keywordService");
 const redis = require("../../config/redis.js"); // Redis 클라이언트 불러오기
 
 const getArticlesByKeyword = async (req, res) => {
@@ -14,6 +14,27 @@ const getArticlesByKeyword = async (req, res) => {
     res.status(200).json({ keyword, articles });
   } catch (error) {
     console.error("Error fetching articles:", error.message);
+    res.status(500).json({ error: "Failed to fetch articles" });
+  }
+};
+
+const getArticlesByCompany = async (req, res) => {
+  const { keyword, company } = req.params;
+  console.log("[getArticlesByCompany] 요청된 키워드:", keyword, "언론사:", company);
+
+  if (!keyword || !company) {
+    return res.status(400).json({ error: "Keyword and company are required" });
+  }
+
+  try {
+    const articles = await fetchArticlesByCompany(keyword, company);
+    if (!articles || articles.length === 0) {
+      return res.status(404).json({ error: `No articles found for ${company} on keyword: ${keyword}` });
+    }
+
+    res.status(200).json({ keyword, company, articles });
+  } catch (error) {
+    console.error("[getArticlesByCompany] 에러 발생 ", error.message);
     res.status(500).json({ error: "Failed to fetch articles" });
   }
 };
@@ -39,4 +60,4 @@ const getArticleCounts = async (req, res) => {
   }
 };
 
-module.exports = { getArticlesByKeyword, getArticleCounts };
+module.exports = { getArticlesByKeyword, getArticlesByCompany, getArticleCounts };

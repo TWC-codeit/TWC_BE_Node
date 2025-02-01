@@ -69,7 +69,7 @@ const fetchArticleCounts = async (keyword) => {
   // keyword:stats 값 조회
   try {
     // keyword:stats 키 존재 여부 확인
-    const companyKeys = await redisClient.companyKeys(key);
+    const companyKeys = await redisClient.keys(key);
     if (!companyKeys) {
       console.log(`Key does not exist: ${key}`);
       return null;

@@ -35,11 +35,14 @@ const fetchArticlesByKeyword = async (keyword) => {
   }
 };
 
-const fetchArticleCounts = async (field) => {
+const fetchArticleCounts = async (keyword) => {
+  console.log(`[fetchArticlesCounts] 조회 키워드: ${keyword}`)
   const key = "keyword:stats";
+  const companyCntKey = `keyword:${keyword}:company_stats`;
 
+  // keyword:stats 값 조회
   try {
-    // 키 존재 여부 확인
+    // keyword:stats 키 존재 여부 확인
     const exists = await redisClient.exists(key);
     if (!exists) {
       console.log(`Key does not exist: ${key}`);
@@ -49,23 +52,37 @@ const fetchArticleCounts = async (field) => {
     // 키의 데이터 타입 확인
     const type = await redisClient.type(key);
 
-    let data = null;
+    let totalCount = null;
     if (type === "hash") {
       // 특정 필드 값 조회
-      data = await redisClient.hGet(key, field);
-      if (!data) {
-        console.log(`Field does not exist: ${field}`);
+      totalCount = await redisClient.hGet(key, keyword);
+      if (!totalCount) {
+        console.log(`keyword does not exist: ${keyword}`);
         return null;
       }
     } else {
-      throw new Error(`Unsupported data type: ${type}`);
+      throw new Error(`Unsupported totalCount type: ${type}`);
     }
 
-    return data;
+    // keyword:${keyword}:company_stats값 조회
+  // == 키워드에 대한 언론사 별 기사 개수 조회
+
+  const mediaCounts = await redisClient.hGetAll(companyCntKey) || {};
+
+  console.log(`키워드 전체 개수: ${totalCount}`);
+  console.log('언론사별 개수: ', mediaCounts);
+
+    return {
+      keyword,
+      totalCount: parseInt(totalCount, 10),
+      mediaCounts: mediaCounts
+    };
   } catch (err) {
     console.error("Error fetching article counts:", err);
     throw err;
   }
+
+  
 };
 
 

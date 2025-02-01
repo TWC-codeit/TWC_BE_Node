@@ -38,9 +38,18 @@ const deleteById = async (id) => {
   });
 };
 
+// 타임라인 이름 수정
+const updateName = async (id, name) => {
+  return await prisma.timeline.update({
+    where: { id: parseInt(id) },
+    data: { name },
+  });
+};
+
 module.exports = {
   create,
   findById,
   findByUserId,
   deleteById,
+  updateName,
 };

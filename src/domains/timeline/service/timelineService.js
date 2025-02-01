@@ -161,9 +161,72 @@ const getTimelineById = async (timelineId, userId) => {
   }
 };
 
+// 타임라인 수정
+const updateTimeline = async (userId, timelineId, name, items) => {
+  logger.info(`Updating timeline: userId = ${userId}, timelineId = ${timelineId}`);
+
+  try {
+    // 해당 타임라인이 본인 소유인지 확인
+    const existingTimeline = await timelineRepository.findById(timelineId, userId);
+    if (!existingTimeline) {
+      logger.warn(`Timeline not found or unauthorized: userId = ${userId}, timelineId = ${timelineId}`);
+      return null;
+    }
+
+    return await prisma.$transaction(async (prisma) => {
+      // 타임라인 이름 수정
+      if (name) {
+        await timelineRepository.updateName(timelineId, name);
+        logger.info(`Timeline name updated: timelineId = ${timelineId}, newName = ${name}`);
+      }
+
+      // 타임라인 아이템 수정
+      if (items) {
+        // position 유효성 체크
+        // positions 추출
+        const positions = items.map(item => item.position);
+
+        // 1부터 시작하는 연속된 숫자인지 확인
+        const sortedPositions = positions.sort((a, b) => a - b); // 오름차순 정렬
+        const isValidSequence = sortedPositions.every((val, i) => val === i + 1);
+
+        // 중복된 값이 있는지 확인
+        const hasDuplicates = new Set(positions).size !== positions.length;
+
+        if (!isValidSequence || hasDuplicates) {
+          logger.warn(`Invalid positions: timelineId = ${timelineId}, positions = ${positions}`);
+          throw { code: 'INVALID_POSITIONS' };
+        }
+
+        // scrapId 중복 체크
+        const scrapIds = items.map(item => item.scrapId);
+        const hasDuplicateScrapIds = new Set(scrapIds).size !== scrapIds.length;
+
+        if (hasDuplicateScrapIds) {
+          logger.warn(`Duplicate scrapIds: timelineId = ${timelineId}`);
+          throw { code: 'DUPLICATE_SCRAPS' };
+        }
+
+        await timelineItemRepository.updateItems(timelineId, items);
+        logger.info(`Timeline items updated: timelineId = ${timelineId}, itemCount = ${items.length}`);
+     
+      }
+
+      // 수정된 타임라인 반환
+      const updatedTimeline = await timelineRepository.findById(timelineId, userId);
+      logger.info(`Timeline updated successfully: timelineId = ${timelineId}`);
+      return updatedTimeline;
+    });
+  } catch (error) {
+    logger.error(`Error updating timeline: ${error.message}, userId = ${userId}, timelineId = ${timelineId}`);
+    throw error;
+  }
+};
+
 module.exports = {
   createTimeline,
   deleteTimeline,
   getTimelines,
   getTimelineById,
+  updateTimeline,
 };

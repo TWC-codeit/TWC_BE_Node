@@ -31,4 +31,10 @@ router.get('/:timelineId', (req, res, next) => {
   next();
 }, timelineController.getTimelineById);
 
+// 타임라인 수정
+router.patch('/:timelineId', (req, res, next) => {
+  logger.info('타임라인 수정 요청');
+  next();
+}, timelineController.updateTimeline);
+
 module.exports = router;

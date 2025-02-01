@@ -77,9 +77,50 @@ const getTimelineById = async (req, res) => {
   }
 };
 
+// 타임라인 수정
+const updateTimeline = async (req, res) => {
+  const { timelineId } = req.params;
+  const userId = req.user.id;
+  const { name, items } = req.body;
+  logger.info(`Received request to update a timeline: userId = ${userId}, timelineId = ${timelineId}`);
+
+  try {
+    const updatedTimeline = await timelineService.updateTimeline(userId, timelineId, name, items);
+
+    if (!updatedTimeline) {
+      logger.warn(`Timeline with ID: ${timelineId} not found for user: ${userId}`);
+      return res.status(403).json({ success: false, message: 'Unauthorized or Timeline not found' });
+    }
+
+    logger.info(`Successfully updated a timeline: userId = ${userId}, timelineId = ${timelineId}`);
+    return res.status(200).json({ success: true, timeline: updatedTimeline });
+  } catch (error) {
+    // 순서 이상 오류 처리
+    if (error.code === 'INVALID_POSITIONS') {
+      return res.status(400).json({
+        success: false,
+        message: 'Positions must be consecutive starting from 1 and cannot have duplicates.',
+      });
+    }
+  
+    // 중복된 scrapId 오류 처리
+    if (error.code === 'DUPLICATE_SCRAPS') {
+      return res.status(400).json({
+        success: false,
+        message: 'Duplicate scrapId found within the same timeline.',
+      });
+    }
+
+    logger.error(`Failed to update a timeline with ID: ${timelineId} for user: ${userId}, Error: ${error.message}`);
+    return res.status(500).json({ success: false, message: 'Failed to update timeline' });
+  }
+};
+
+
 module.exports = {
   createTimeline,
   deleteTimeline,
   getTimelines,
   getTimelineById,
+  updateTimeline,
 };

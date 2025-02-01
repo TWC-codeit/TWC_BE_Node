@@ -367,3 +367,96 @@ Unknown field `timelineItems` for include statement on model `Timeline`. Availab
 [2025-01-31 22:03:28] ERROR: Unauthorized attempt or timeline not found: userId = 1, timelineId = 13
 [2025-01-31 22:03:42] ERROR: Unauthorized attempt or timeline not found: userId = 1, timelineId = 13
 [2025-01-31 22:03:45] ERROR: Unauthorized attempt or timeline not found: userId = 1, timelineId = 15
+[2025-02-01 19:42:24] ERROR: Error updating timeline: 
+Invalid `prisma.timelineItem.deleteMany()` invocation in
+/Users/macpro/Projects/TWC_BE_Node/src/domains/timeline/repository/timelineItemRepository.js:40:29
+
+  37 // 타임라인 수정
+  38 const updateItems = async (timelineId, items) => {
+  39   // 기존 아이템 삭제
+→ 40   await prisma.timelineItem.deleteMany({
+         where: {
+           timelienId: 13,
+           ~~~~~~~~~~
+       ?   AND?: TimelineItemWhereInput | TimelineItemWhereInput[],
+       ?   OR?: TimelineItemWhereInput[],
+       ?   NOT?: TimelineItemWhereInput | TimelineItemWhereInput[],
+       ?   id?: IntFilter | Int,
+       ?   position?: IntFilter | Int,
+       ?   createdAt?: DateTimeFilter | DateTime,
+       ?   timelineId?: IntFilter | Int,
+       ?   scrapId?: IntFilter | Int,
+       ?   timeline?: TimelineScalarRelationFilter | TimelineWhereInput,
+       ?   scrap?: ScrapScalarRelationFilter | ScrapWhereInput
+         }
+       })
+
+Unknown argument `timelienId`. Did you mean `timelineId`? Available options are marked with ?., userId = 4, timelineId = 13
+[2025-02-01 19:42:24] ERROR: Failed to update a timeline with ID: 13 for user: 4, Error: 
+Invalid `prisma.timelineItem.deleteMany()` invocation in
+/Users/macpro/Projects/TWC_BE_Node/src/domains/timeline/repository/timelineItemRepository.js:40:29
+
+  37 // 타임라인 수정
+  38 const updateItems = async (timelineId, items) => {
+  39   // 기존 아이템 삭제
+→ 40   await prisma.timelineItem.deleteMany({
+         where: {
+           timelienId: 13,
+           ~~~~~~~~~~
+       ?   AND?: TimelineItemWhereInput | TimelineItemWhereInput[],
+       ?   OR?: TimelineItemWhereInput[],
+       ?   NOT?: TimelineItemWhereInput | TimelineItemWhereInput[],
+       ?   id?: IntFilter | Int,
+       ?   position?: IntFilter | Int,
+       ?   createdAt?: DateTimeFilter | DateTime,
+       ?   timelineId?: IntFilter | Int,
+       ?   scrapId?: IntFilter | Int,
+       ?   timeline?: TimelineScalarRelationFilter | TimelineWhereInput,
+       ?   scrap?: ScrapScalarRelationFilter | ScrapWhereInput
+         }
+       })
+
+Unknown argument `timelienId`. Did you mean `timelineId`? Available options are marked with ?.
+[2025-02-01 19:47:37] ERROR: Error updating timeline: 
+Invalid `prisma.timelineItem.createMany()` invocation in
+/Users/macpro/Projects/TWC_BE_Node/src/domains/timeline/repository/timelineItemRepository.js:45:30
+
+  42 });
+  43 
+  44  // 새로운 아이템 추가
+→ 45  await prisma.timelineItem.createMany(
+Foreign key constraint violated: `timeline_items_scrapId_fkey (index)`, userId = 4, timelineId = 13
+[2025-02-01 19:47:37] ERROR: Failed to update a timeline with ID: 13 for user: 4, Error: 
+Invalid `prisma.timelineItem.createMany()` invocation in
+/Users/macpro/Projects/TWC_BE_Node/src/domains/timeline/repository/timelineItemRepository.js:45:30
+
+  42 });
+  43 
+  44  // 새로운 아이템 추가
+→ 45  await prisma.timelineItem.createMany(
+Foreign key constraint violated: `timeline_items_scrapId_fkey (index)`
+[2025-02-01 20:06:05] ERROR: Error updating timeline: Positions must be consecutive starting from 1 and cannot have duplicates., userId = 4, timelineId = 13
+[2025-02-01 20:06:06] ERROR: Failed to update a timeline with ID: 13 for user: 4, Error: Positions must be consecutive starting from 1 and cannot have duplicates.
+[2025-02-01 20:10:43] ERROR: Error updating timeline: undefined, userId = 4, timelineId = 13
+[2025-02-01 20:11:18] ERROR: Error updating timeline: undefined, userId = 4, timelineId = 13
+[2025-02-01 20:12:33] ERROR: Error updating timeline: 
+Invalid `prisma.timelineItem.createMany()` invocation in
+/Users/macpro/Projects/TWC_BE_Node/src/domains/timeline/repository/timelineItemRepository.js:45:30
+
+  42 });
+  43 
+  44  // 새로운 아이템 추가
+→ 45  await prisma.timelineItem.createMany(
+Unique constraint failed on the fields: (`timelineId`,`scrapId`), userId = 4, timelineId = 13
+[2025-02-01 20:12:33] ERROR: Failed to update a timeline with ID: 13 for user: 4, Error: 
+Invalid `prisma.timelineItem.createMany()` invocation in
+/Users/macpro/Projects/TWC_BE_Node/src/domains/timeline/repository/timelineItemRepository.js:45:30
+
+  42 });
+  43 
+  44  // 새로운 아이템 추가
+→ 45  await prisma.timelineItem.createMany(
+Unique constraint failed on the fields: (`timelineId`,`scrapId`)
+[2025-02-01 20:24:04] ERROR: Error updating timeline: undefined, userId = 4, timelineId = 13
+[2025-02-01 20:24:27] ERROR: Error updating timeline: undefined, userId = 4, timelineId = 13
+[2025-02-01 20:24:37] ERROR: Error updating timeline: undefined, userId = 4, timelineId = 13

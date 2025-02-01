@@ -33,9 +33,37 @@ const updatePosition = async (id, position) => {
   });
 };
 
+
+// 타임라인 수정
+const updateItems = async (timelineId, items) => {
+  // 기존 아이템 삭제
+  await prisma.timelineItem.deleteMany({
+    where: { timelineId: parseInt(timelineId) },
+  });
+
+   // 새로운 아이템 추가
+   await prisma.timelineItem.createMany({
+    data: items.map(item => ({
+      timelineId: parseInt(timelineId),
+      scrapId: item.scrapId,
+      position: item.position,
+    })),
+  });
+};
+
+// 타임라인 아이템 찾기
+const findByTimelineId = async (timelineId) => {
+  return await prisma.timelineItem.findMany({
+    where: { timelineId: parseInt(timelineId) },
+    orderBy: { position: 'asc' },
+  });
+};
+
 module.exports = {
   create,
   deleteById,
   deleteByTimelineId,
   updatePosition,
+  updateItems,
+  findByTimelineId,
 };

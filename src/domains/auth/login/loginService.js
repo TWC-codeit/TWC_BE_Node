@@ -1,5 +1,5 @@
 const { authenticateUser } = require('../common/authService');
-const {generateAccessToken} = require("../common/jwtUtils");
+const { generateAccessToken } = require('../common/jwtUtils');
 
 async function loginUser(username, password) {
     const user = await authenticateUser(username, password);

@@ -8,63 +8,19 @@ datasource db {
 }
 
 model User {
-  id        Int         @id @default(autoincrement())
-  username  String      @unique
+  id        Int      @id @default(autoincrement())
+  username  String   @unique
   password  String
   name      String
   gender    Gender
+  //birthDate DateTime @db.Date
   birthDate String
-  createdAt DateTime    @default(now())
-  scraps    scraps[]
-  timelines timelines[]
+  createdAt DateTime @default(now())
 
-  @@map("users")
-}
+  timelines Timeline[]
+  scraps Scrap[]
 
-model articles {
-  id          Int      @id @default(autoincrement())
-  keyword     String
-  title       String
-  publishedAt DateTime
-  source      String
-  content     String?
-  imageUrl    String?
-  url         String
-  scraps      scraps[]
-}
-
-model scraps {
-  id             Int              @id @default(autoincrement())
-  userId         Int
-  articleId      Int
-  createdAt      DateTime         @default(now())
-  articles       articles         @relation(fields: [articleId], references: [id], onDelete: Cascade)
-  users          User             @relation(fields: [userId], references: [id], onDelete: Cascade)
-  timeline_items timeline_items[]
-
-  @@unique([userId, articleId])
-}
-
-model timeline_items {
-  id         Int       @id @default(autoincrement())
-  position   Int
-  createdAt  DateTime  @default(now())
-  timelineId Int
-  scrapId    Int
-  scraps     scraps    @relation(fields: [scrapId], references: [id], onDelete: Cascade)
-  timelines  timelines @relation(fields: [timelineId], references: [id], onDelete: Cascade)
-
-  @@unique([timelineId, scrapId])
-}
-
-model timelines {
-  id             Int              @id @default(autoincrement())
-  name           String
-  createdAt      DateTime         @default(now())
-  updatedAt      DateTime
-  userId         Int
-  timeline_items timeline_items[]
-  users          User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  @@map("users")  // 테이블 이름 'users'
 }
 
 enum Gender {
@@ -72,3 +28,65 @@ enum Gender {
   f
   n
 }
+
+model Article {
+  id          Int       @id @default(autoincrement())
+  keyword     String
+  title       String
+  publishedAt DateTime 
+  source      String
+  content     String?
+  imageUrl    String?   
+  url         String
+
+  scraps      Scrap[]
+
+   @@map("articles") 
+}
+
+
+model Scrap {
+  id        Int       @id @default(autoincrement())
+  userId    Int
+  articleId Int
+  createdAt DateTime  @default(now())
+
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  article   Article   @relation(fields: [articleId], references: [id], onDelete: Cascade)
+  timelineItems   TimelineItem[]
+
+   @@unique([userId, articleId])  // userId와 articleId 조합이 고유해야 함 (중복 스크랩 불가)
+
+
+   @@map("scraps") 
+}
+
+
+model Timeline {
+  id        Int            @id @default(autoincrement())
+  name      String
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
+  userId    Int            
+
+  user      User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  items     TimelineItem[] 
+
+   @@map("timelines") 
+}
+
+model TimelineItem {
+  id        Int        @id @default(autoincrement())
+  position  Int
+  createdAt DateTime   @default(now())
+  timelineId Int       
+  scrapId   Int        
+
+  timeline  Timeline   @relation(fields: [timelineId], references: [id], onDelete: Cascade)
+  scrap     Scrap      @relation(fields: [scrapId], references: [id], onDelete: Cascade)
+
+  @@unique([timelineId, scrapId]) // 동일한 스크랩이 같은 타임라인에 중복 추가되지 않도록 제약
+
+  @@map("timeline_items") 
+}
+

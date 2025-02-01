@@ -26,4 +26,7 @@ const authMiddleware = (req, res, next) => {
   next(); // 다음 미들웨어 또는 라우터로 이동
 };
 
-module.exports = { authMiddleware };
+module.exports = {
+  authMiddleware,
+}
+

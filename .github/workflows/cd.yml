@@ -60,18 +60,18 @@ jobs:
         key: ${{ env.PRIVATE_KEY }}
         script: |
           # 기존 컨테이너 중지 및 제거
-          CONTAINER_ID=$(sudo docker ps -q --filter "publish=3000")
+          CONTAINER_ID=$(sudo docker ps -aq --filter "publish=3000")
           
           if [ ! -z "$CONTAINER_ID" ]; then
             sudo docker stop $CONTAINER_ID
             sudo docker rm $CONTAINER_ID
           fi
 
-          CONTAINER_NAME=$(sudo docker ps -q --filter "name=${{ env.CONTAINER_NAME }}")
+          CONTAINER_NAME=$(sudo docker ps -aq --filter "name=${{ env.CONTAINER_NAME }}")
           
-          if [ ! -z "$CONTAINER_ID_NAME" ]; then
-            sudo docker stop $CONTAINER_ID_NAME
-            sudo docker rm $CONTAINER_ID_NAME
+          if [ ! -z "$CONTAINER_NAME" ]; then
+            sudo docker stop $CONTAINER_NAME
+            sudo docker rm $CONTAINER_NAME
           fi
 
           # 최신 Docker 이미지 풀

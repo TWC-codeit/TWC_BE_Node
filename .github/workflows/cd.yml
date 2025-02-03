@@ -70,5 +70,10 @@ jobs:
           # 최신 Docker 이미지 풀
           sudo docker pull ${{ env.DOCKER_HUB }}:latest
 
-          # Docker 컨테이너 실행 (환경 변수 .env 파일 사용)
-          sudo docker run -d -p 3000:3000 --env-file .env --name ${{ env.CONTAINER_NAME }} ${{ env.DOCKER_HUB }}:latest
+           # .env 파일을 EC2로 복사
+          echo "${{ secrets.APPLICATION }}" > ./envfile
+          scp -i ${{ env.PRIVATE_KEY }} ./envfile ${{ env.EC2_SSH_USER }}@${{ env.EC2_HOST }}:/path/to/destination/.env
+
+          # Docker 컨테이너 실행 
+          # sudo docker run -d -p 3000:3000 --env-file .env --name ${{ env.CONTAINER_NAME }} ${{ env.DOCKER_HUB }}:latest
+          sudo docker run -d -p 3000:3000 --name ${{ env.CONTAINER_NAME }} ${{ env.DOCKER_HUB }}:latest

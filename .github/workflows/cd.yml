@@ -74,6 +74,9 @@ jobs:
             sudo docker rm $CONTAINER_NAME
           fi
 
+          # 포트를 사용 중인 프로세스 확인하고 종료
+          sudo lsof -ti:3000 | xargs sudo kill -9
+
           # 최신 Docker 이미지 풀
           sudo docker pull ${{ env.DOCKER_HUB }}:latest
 

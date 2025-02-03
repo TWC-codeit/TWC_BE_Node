@@ -8,7 +8,11 @@
   "servers": [
     {
       "url": "http://3.26.157.251:3000",
-      "description": "Production server"
+      "description": "Server1 (pm2)"
+    },
+    {
+      "url": "http://13.238.115.119:3000",
+      "description": "Server2 (github actions)"
     }
   ],
   "paths": {

@@ -77,4 +77,5 @@ jobs:
           sudo docker run -d -p 3000:3000 --name "${{ env.CONTAINER_NAME }}" "${{ secrets.DOCKER_USERNAME }}/${{ env.DOCKER_IMAGE_NAME }}:latest"
 
     - name: Clean up unused Docker images
-      run: sudo docker images -q --filter "dangling=true" | xargs sudo docker rmi
+      run: sudo docker image prune -f
+

@@ -35,16 +35,13 @@ jobs:
       run: npm install
 
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag ${{ secrets.DOCKER_USERNAME }}/${{ env.DOCKER_IMAGE_NAME }}:latest
+      run: docker build . --file Dockerfile --tag "${{ secrets.DOCKER_USERNAME }}/${{ env.DOCKER_IMAGE_NAME }}:latest"
 
     - name: Login to Docker Hub using Access Token
       run: echo "${{ secrets.DOCKER_HUB_TOKEN }}" | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
 
     - name: Push the Docker image to Docker Hub
-      run: docker push ${{ secrets.DOCKER_USERNAME }}/${{ env.DOCKER_IMAGE_NAME }}:latest
-
-
-
+      run: docker push "${{ secrets.DOCKER_USERNAME }}/${{ env.DOCKER_IMAGE_NAME }}:latest"
 
   deploy-to-ec2:
     needs: build-and-push-docker
@@ -74,8 +71,7 @@ jobs:
           fi
 
           # 최신 Docker 이미지 풀
-          sudo docker pull ${{ secrets.DOCKER_USERNAME }}/${{ env.DOCKER_IMAGE_NAME }}:latest
+          sudo docker pull "${{ secrets.DOCKER_USERNAME }}/${{ env.DOCKER_IMAGE_NAME }}:latest"
 
           # Docker 컨테이너 실행 
-          # sudo docker run -d -p 3000:3000 --env-file .env --name ${{ env.CONTAINER_NAME }} ${{ env.DOCKER_HUB }}:latest
-          sudo docker run -d -p 3000:3000 --name ${{ env.CONTAINER_NAME }} ${{ env.DOCKER_HUB }}:latest
+          sudo docker run -d -p 3000:3000 --name "${{ env.CONTAINER_NAME }}" "${{ secrets.DOCKER_USERNAME }}/${{ env.DOCKER_IMAGE_NAME }}:latest"

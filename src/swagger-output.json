@@ -1,0 +1,607 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "TWC API 문서",
+    "description": "TWC의 Backend API입니다.",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://3.26.157.251:3000",
+      "description": "Production server"
+    }
+  ],
+  "paths": {
+    "/api/auth/login": {
+      "post": {
+        "tags": ["인증"],
+        "summary": "로그인",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "username": {
+                    "type": "string",
+                    "example": "user1"
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": "password1"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/auth/logout": {
+      "post": {
+        "tags": ["인증"],
+        "summary": "로그아웃",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/api/auth/signup": {
+      "post": {
+        "tags": ["인증"],
+        "summary": "회원가입",
+        "description": "",
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "username": {
+                    "type": "string",
+                    "example": "testuser"
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": "testpassword"
+                  },
+                  "name": {
+                    "type": "string",
+                    "example": "홍길동"
+                  },
+                  "gender": {
+                    "type": "string",
+                    "example": "비공개"
+                  },
+                  "birthDate": {
+                    "type": "string",
+                    "example": "1999-01-01"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/scraps/": {
+      "get": {
+        "tags": ["스크랩"],
+        "summary": "유저의 스크랩 목록 조회",
+        "description": "",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      },
+      "post": {
+        "tags": ["스크랩"],
+        "summary": "유저의 스크랩 추가",
+        "description": "Request body 2가지 - Example 1(articleId), Example 2(redisKey, index)",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "oneOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "articleId": {
+                        "type": "integer",
+                        "example": "any"
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "redisKey": {
+                        "type": "string",
+                        "example": "any"
+                      },
+                      "index": {
+                        "type": "integer",
+                        "example": 1
+                      }
+                    }
+                  }
+                ]
+              },
+              "examples": {
+                "Example 1 (Article ID)": {
+                  "value": {
+                    "articleId": "15"
+                  }
+                },
+                "Example 2 (Redis Key & Index)": {
+                  "value": {
+                    "redisKey": "keyword:수출:articles",
+                    "index": 1
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/scraps/{id}": {
+      "delete": {
+        "tags": ["스크랩"],
+        "summary": "유저의 스크랩 삭제",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/api/timelines/": {
+      "post": {
+        "tags": ["타임라인"],
+        "summary": "유저의 타임라인 생성",
+        "description": "name은 필수, items는 선택",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "example": "나의 타임라인"
+                  },
+                  "items": {
+                    "type": "array",
+                    "description": "타임라인에 포함된 아이템들",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "scrapId": {
+                          "type": "integer",
+                          "example": 5
+                        },
+                        "position": {
+                          "type": "integer",
+                          "example": 1
+                        }
+                      }
+                    },
+                    "example": [
+                      { "scrapId": 2, "position": 1 },
+                      { "scrapId": 5, "position": 2 }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": ["타임라인"],
+        "summary": "유저의 타임라인 목록 조회",
+        "description": "",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/timelines/{timelineId}": {
+      "delete": {
+        "tags": ["타임라인"],
+        "summary": "유저의 특정 타임라인 삭제",
+        "description": "",
+        "parameters": [
+          {
+            "name": "timelineId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "get": {
+        "tags": ["타임라인"],
+        "summary": "유저의 특정 타임라인 조회",
+        "description": "",
+        "parameters": [
+          {
+            "name": "timelineId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "patch": {
+        "tags": ["타임라인"],
+        "summary": "유저의 특정 타임라인 수정",
+        "description": "요청 본문에 name과 items 중 수정된 데이터만 포함(둘 다도 가능).",
+        "parameters": [
+          {
+            "name": "timelineId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "example": "수정된 타임라인 이름"
+                  },
+                  "items": {
+                    "type": "array",
+                    "description": "타임라인에 포함된 아이템들",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "scrapId": {
+                          "type": "integer",
+                          "example": 5
+                        },
+                        "position": {
+                          "type": "integer",
+                          "example": 1
+                        }
+                      }
+                    },
+                    "example": [
+                      { "scrapId": 3, "position": 1 },
+                      { "scrapId": 5, "position": 2 },
+                      { "scrapId": 1, "position": 3 }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/articles/count/{keyword}": {
+      "get": {
+        "tags": ["키워드&뉴스"],
+        "summary": "키워드 별 기사 개수 조회",
+        "description": "해당 키워드에 대한 기사들의 전체 개수와 각 언론사 별 개수를 제공합니다.",
+        "parameters": [
+          {
+            "name": "keyword",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/articles/{keyword}": {
+      "get": {
+        "tags": ["키워드&뉴스"],
+        "summary": "키워드 별 전체 기사 목록 조회",
+        "description": "해당 키워드에 대한 모든 기사 목록을 제공합니다.",
+        "parameters": [
+          {
+            "name": "keyword",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/articles/{keyword}/{company}": {
+      "get": {
+        "tags": ["키워드&뉴스"],
+        "summary": "키워드 별 특정 언론사의 기사 목록 조회",
+        "description": "해당 키워드에 대한 특정 언론사의 기사 목록을 제공합니다.",
+        "parameters": [
+          {
+            "name": "keyword",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "company",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/keywords": {
+      "get": {
+        "tags": ["키워드&뉴스"],
+        "summary": "키워드 목록 조회",
+        "description": "인기 키워드 50개를 제공합니다.",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "in": "header",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}

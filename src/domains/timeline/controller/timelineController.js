@@ -7,6 +7,10 @@ const createTimeline = async (req, res) => {
   const { name, items } = req.body; // 요청 본문에서 타임라인 이름과 아이템들 받기
   logger.info(`Received request to create timeline: userId = ${userId}, name = ${name}`);
 
+  if (!name) {
+    return res.status(400).json({ success: false, message: 'Timeline name is required' });
+  }
+
   try {
     const newTimeline = await timelineService.createTimeline(userId, name, items);
 

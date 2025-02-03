@@ -74,15 +74,8 @@ jobs:
             sudo docker rm $CONTAINER_NAME
           fi
 
-          # 포트를 사용 중인 프로세스 확인하고 종료
-          sudo lsof -ti:3000 | xargs sudo kill -9
-
           # 최신 Docker 이미지 풀
           sudo docker pull ${{ env.DOCKER_HUB }}:latest
-
-           # .env 파일을 EC2로 복사
-          echo "${{ secrets.APPLICATION }}" > ./envfile
-          scp -i ${{ env.PRIVATE_KEY }} ./envfile ${{ env.EC2_SSH_USER }}@${{ env.EC2_HOST }}:/path/to/destination/.env
 
           # Docker 컨테이너 실행 
           # sudo docker run -d -p 3000:3000 --env-file .env --name ${{ env.CONTAINER_NAME }} ${{ env.DOCKER_HUB }}:latest

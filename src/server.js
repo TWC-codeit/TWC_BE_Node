@@ -2,6 +2,9 @@ require('dotenv').config(); // 환경 변수 로드
 const app = require('./app'); // app.js 로드
 const database = require('./config/db'); // 데이터베이스 연결 모듈
 
+const swaggerUi = require('swagger-ui-express');
+const swaggerFile = require('./swagger-output.json');
+
 // 서버 포트 설정
 const port = process.env.PORT || 3000;
 
@@ -9,6 +12,9 @@ async function startServer() {
   try {
     // 데이터베이스 연결
     await database.connect(); // 데이터베이스 연결 테스트
+
+    // Swagger UI
+    app.use("/swagger", swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
     // 서버 시작
     app.listen(port, () => {

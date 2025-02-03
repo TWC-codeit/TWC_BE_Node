@@ -1,0 +1,71 @@
+name: Deploy to AWS EC2 using Docker
+
+on:
+  push:
+    branches:
+      - develop
+  pull_request:
+    branches:
+      - develop
+
+env:
+  DOCKER_IMAGE_NAME: twc-node
+  EC2_HOST: ${{ secrets.EC2_HOST }}
+  EC2_SSH_USER: ubuntu
+  PRIVATE_KEY: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
+  DOCKER_HUB: ${{ secrets.DOCKER_USERNAME }}/twc-node
+  CONTAINER_NAME: twc-node-container
+
+jobs:
+  build-and-push-docker:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+
+    - name: Set up .env
+      run: echo "${{ secrets.APPLICATION }}" > ./.env
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Build the Docker image
+      run: docker build . --file Dockerfile --tag ${{ env.DOCKER_IMAGE_NAME }}:latest
+
+    - name: Login to Docker Hub using Access Token
+      run: echo "${{ secrets.DOCKER_HUB_TOKEN }}" | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
+
+    - name: Push the Docker image to Docker Hub
+      run: docker push ${{ env.DOCKER_IMAGE_NAME }}:latest
+
+  deploy-to-ec2:
+    needs: build-and-push-docker
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Deploy to EC2
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ env.EC2_HOST }}
+        username: ${{ env.EC2_SSH_USER }}
+        key: ${{ env.PRIVATE_KEY }}
+        script: |
+          # 기존 컨테이너 중지 및 제거
+          CONTAINER_ID=$(sudo docker ps -q --filter "publish=3000")
+          
+          if [ ! -z "$CONTAINER_ID" ]; then
+            sudo docker stop $CONTAINER_ID
+            sudo docker rm $CONTAINER_ID
+          fi
+
+          # 최신 Docker 이미지 풀
+          sudo docker pull ${{ env.DOCKER_HUB }}:latest
+
+          # Docker 컨테이너 실행 (환경 변수 .env 파일 사용)
+          sudo docker run -d -p 3000:3000 --env-file .env --name ${{ env.CONTAINER_NAME }} ${{ env.DOCKER_HUB }}:latest

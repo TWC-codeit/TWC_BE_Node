@@ -167,7 +167,7 @@
         "requestBody": {
           "content": {
             "application/json": {
-"schema": {
+              "schema": {
                 "oneOf": [
                   {
                     "type": "object",

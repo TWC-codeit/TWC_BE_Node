@@ -167,7 +167,7 @@
         "requestBody": {
           "content": {
             "application/json": {
-              "schema": {
+"schema": {
                 "oneOf": [
                   {
                     "type": "object",
@@ -211,7 +211,7 @@
         }
       }
     },
-    "/api/scraps/{id}": {
+    "/api/scraps/{scrapId}": {
       "delete": {
         "tags": ["스크랩"],
         "summary": "유저의 스크랩 삭제",
@@ -263,6 +263,9 @@
         "responses": {
           "201": {
             "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
           },
           "401": {
             "description": "Unauthorized"
@@ -600,12 +603,17 @@
   },
   "components": {
     "securitySchemes": {
-      "bearerAuth": {
+      "BearerAuth": {
         "type": "http",
         "scheme": "bearer",
         "in": "header",
         "bearerFormat": "JWT"
       }
     }
-  }
+  },
+  "security": [
+    {
+      "BearerAuth": []
+    }
+  ]
 }

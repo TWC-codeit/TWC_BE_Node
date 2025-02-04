@@ -53,13 +53,13 @@ const createScrapFromRedis = async (userId, redisKey, index = 0) => {
     const createdArticle = await articleRepository.createArticle(articleData, s3Url, kwd);
     console.log("기사를 저장했습니다.");
 
-    const newScrap = await prisma.scraps.create({
+    const newScrap = await prisma.scrap.create({
         data: {
             userId: userId,
             articleId: createdArticle.id,
         },
         include: {
-            articles: {
+            article: {
                 select: { title: true }
             }
         },
@@ -68,7 +68,7 @@ const createScrapFromRedis = async (userId, redisKey, index = 0) => {
     return {
         id: newScrap.id,
         articleId: newScrap.articleId,
-        title: newScrap.articles.title,
+        title: newScrap.article.title,
         scrapedAt: newScrap.createdAt,
     };
 }

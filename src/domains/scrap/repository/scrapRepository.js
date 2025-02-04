@@ -1,7 +1,7 @@
 const { prisma } = require("../../../config/db");
 
 const createScrap = async (userId, articleId) => {
-    const isExistArticle = await prisma.articles.findUnique({
+    const isExistArticle = await prisma.article.findUnique({
         where: {
             id: articleId,
         }
@@ -11,7 +11,7 @@ const createScrap = async (userId, articleId) => {
         throw new Error('존재하지 않는 기사입니다.');
     }
 
-    const isExistScrap = await prisma.scraps.findFirst({
+    const isExistScrap = await prisma.scrap.findFirst({
         where: {
             userId: userId,
             articleId: articleId,
@@ -22,14 +22,14 @@ const createScrap = async (userId, articleId) => {
         throw new Error('이미 스크랩한 기사입니다.');
     }
 
-    const newScrap = await prisma.scraps.create({
+    const newScrap = await prisma.scrap.create({
         data: {
             userId: userId,
             articleId: articleId,
         },
 
         include: {
-            articles: {
+            article: {
                 select: {
                     title: true,
                 },
@@ -40,19 +40,19 @@ const createScrap = async (userId, articleId) => {
     return {
         id: newScrap.id,
         articleId: newScrap.articleId,
-        title: newScrap.articles.title,
+        title: newScrap.article.title,
         scrapedAt: newScrap.createdAt,
     }
 }
 
 const getAllScraps = async (userId) => {
-    const scraps = await prisma.scraps.findMany({
+    const scraps = await prisma.scrap.findMany({
         where: {
             userId: userId,
         },
 
         include: {
-            articles: {
+            article: {
                 select: {
                     title: true,
                 },
@@ -67,13 +67,13 @@ const getAllScraps = async (userId) => {
     return scraps.map(scrap => ({
         id: scrap.id,
         articleId: scrap.articleId,
-        title: scrap.articles.title,
+        title: scrap.article.title,
         scrapedAt: scrap.createdAt,
     }));
 }
 
 const deleteScrap = async (userId, scrapId) => {
-    const scrap = await prisma.scraps.findUnique({
+    const scrap = await prisma.scrap.findUnique({
         where: {
             id: scrapId,
         },
@@ -86,7 +86,7 @@ const deleteScrap = async (userId, scrapId) => {
         throw new Error('요청한 스크랩 내용이 존재하지 않습니다.');
     }
 
-    await prisma.scraps.delete({
+    await prisma.scrap.delete({
         where: {
             id: scrapId,
         }

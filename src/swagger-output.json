@@ -18,7 +18,7 @@
   "paths": {
     "/api/auth/login": {
       "post": {
-        "tags": ["인증"],
+        "tags": ["회원"],
         "summary": "로그인",
         "description": "",
         "responses": {
@@ -52,7 +52,7 @@
     },
     "/api/auth/logout": {
       "post": {
-        "tags": ["인증"],
+        "tags": ["회원"],
         "summary": "로그아웃",
         "description": "",
         "responses": {
@@ -67,7 +67,7 @@
     },
     "/api/auth/signup": {
       "post": {
-        "tags": ["인증"],
+        "tags": ["회원"],
         "summary": "회원가입",
         "description": "",
         "responses": {

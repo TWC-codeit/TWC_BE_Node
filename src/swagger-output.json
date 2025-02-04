@@ -7,12 +7,12 @@
   },
   "servers": [
     {
-      "url": "http://3.26.157.251:3000",
-      "description": "Server1(pm2)"
+      "url": "http://13.238.115.119",
+      "description": "twc-prod-02"
     },
     {
-      "url": "http://13.238.115.119:3000",
-      "description": "Server2(github actions)"
+      "url": "http://3.26.157.251:3000",
+      "description": "twc-prod-01"
     }
   ],
   "paths": {

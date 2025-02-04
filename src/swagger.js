@@ -8,14 +8,18 @@ const doc = {
   },
   servers: [
     {
-      url: 'http://3.26.157.251:3000',
-      description: 'Production server'
+      "url": "http://13.238.115.119",
+      "description": "twc-prod-02"
+    },
+    {
+      "url": "http://3.26.157.251:3000",
+      "description": "twc-prod-01"
     }
   ],
   schemes: ['http'],
   components: {
     securitySchemes: {
-      bearerAuth: {
+      BearerAuth: {
         type: 'http',
         scheme: 'bearer',
         in: 'header',
@@ -23,6 +27,11 @@ const doc = {
       },
     },
   },
+  security: [
+    {
+      BearerAuth: [],
+    },
+  ],
 };
 
 const outputFile = './swagger-output.json';

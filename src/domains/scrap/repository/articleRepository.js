@@ -1,7 +1,7 @@
 const { prisma } = require("../../../config/db");
 
 const createArticle = async (articleData, s3Url, keyword = "default") => {
-    return prisma.articles.create({
+    return prisma.article.create({
         data: {
             keyword,
             title: articleData.title,

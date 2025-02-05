@@ -491,3 +491,4 @@ Unique constraint failed on the fields: (`timelineId`,`scrapId`)
 [2025-02-05 00:47:36] ERROR: User 1: 스크랩 조회 중 오류 발생 - Cannot read properties of undefined (reading 'findMany') Cannot read properties of undefined (reading 'findMany')
 [2025-02-05 00:47:51] ERROR: Error retrieving timelines for user: 1, Error: Cannot read properties of undefined (reading 'findMany')
 [2025-02-05 00:47:51] ERROR: Error fetching timelines: userId = 1, error: Cannot read properties of undefined (reading 'findMany')
+[2025-02-05 14:50:53] ERROR: User 1: 스크랩 생성 중 오류 발생 - 이미 스크랩한 기사입니다. 이미 스크랩한 기사입니다.

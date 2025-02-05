@@ -3,9 +3,9 @@ const scrapService = require('../service/scrapService')
 const logger = require("../../../config/logger");
 
 async function createScrap(req, res) {
-    try {
-        const userId = req.user.id;
+    const userId = req.user.id;
 
+    try {
         if (req.body.articleId) {
             const { articleId } = req.body;
             const createdScrap = await scrapService.createScrap(userId, articleId);

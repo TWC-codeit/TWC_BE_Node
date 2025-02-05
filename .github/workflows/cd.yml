@@ -9,12 +9,10 @@ on:
     
 
 env:
-  DOCKER_IMAGE_NAME: twc-be-node
-  EC2_HOST: ${{ secrets.EC2_HOST }}
-  EC2_SSH_USER: ubuntu
-  PRIVATE_KEY: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
   CONTAINER_NAME: twc-container
+  DOCKER_HUB_REPOSITORY: ${{ secrets.DOCKER_USERNAME }}/twc-be-node
 
+  
 jobs:
   build-and-push-docker:
     runs-on: ubuntu-latest
@@ -32,13 +30,13 @@ jobs:
       run: echo "${{ secrets.APPLICATION }}" > .env
 
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag "${{ secrets.DOCKER_USERNAME }}/${{ env.DOCKER_IMAGE_NAME }}:latest"
+      run: docker build . --file Dockerfile --tag "${{ env.DOCKER_HUB_REPOSITORY }}:latest"
 
     - name: Login to Docker Hub using Access Token
       run: echo "${{ secrets.DOCKER_HUB_TOKEN }}" | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
 
     - name: Push the Docker image to Docker Hub
-      run: docker push "${{ secrets.DOCKER_USERNAME }}/${{ env.DOCKER_IMAGE_NAME }}:latest"
+      run: docker push "${{ env.DOCKER_HUB_REPOSITORY }}:latest"
 
   deploy-to-ec2:
     needs: build-and-push-docker
@@ -48,9 +46,9 @@ jobs:
     - name: Deploy to EC2
       uses: appleboy/ssh-action@master
       with:
-        host: ${{ env.EC2_HOST }}
-        username: ${{ env.EC2_SSH_USER }}
-        key: ${{ env.PRIVATE_KEY }}
+        host: ${{ secrets.EC2_HOST }}
+        username: ${{ secrets.EC2_SSH_USERNAME }}
+        key: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
         script: |
           # 기존 컨테이너 중지 및 제거
           CONTAINER_ID=$(sudo docker ps -aq --filter "publish=3000")
@@ -68,10 +66,10 @@ jobs:
           fi
 
           # 최신 Docker 이미지 풀
-          sudo docker pull "${{ secrets.DOCKER_USERNAME }}/${{ env.DOCKER_IMAGE_NAME }}:latest"
+          sudo docker pull "${{ env.DOCKER_HUB_REPOSITORY }}:latest"
 
           # Docker 컨테이너 실행 
-          sudo docker run -d --restart always -p 3000:3000 --name "${{ env.CONTAINER_NAME }}" "${{ secrets.DOCKER_USERNAME }}/${{ env.DOCKER_IMAGE_NAME }}:latest"
+          sudo docker run -d --restart always -p 3000:3000 --name "${{ env.CONTAINER_NAME }}" "${{ env.DOCKER_HUB_REPOSITORY }}:latest"
 
           # 사용되지 않는 Docker 이미지 정리
           sudo docker image prune -f

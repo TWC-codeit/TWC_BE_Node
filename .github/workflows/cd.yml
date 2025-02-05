@@ -31,9 +31,6 @@ jobs:
     - name: Set up .env
       run: echo "${{ secrets.APPLICATION }}" > .env
 
-    - name: Install dependencies
-      run: npm install
-
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag "${{ secrets.DOCKER_USERNAME }}/${{ env.DOCKER_IMAGE_NAME }}:latest"
 

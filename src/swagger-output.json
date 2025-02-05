@@ -196,7 +196,7 @@
               "examples": {
                 "Example 1 (Article ID)": {
                   "value": {
-                    "articleId": "15"
+                    "articleId": 15
                   }
                 },
                 "Example 2 (Redis Key & Index)": {

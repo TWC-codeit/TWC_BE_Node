@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "articles" ALTER COLUMN "publishedAt" DROP NOT NULL,
+ALTER COLUMN "url" DROP NOT NULL;

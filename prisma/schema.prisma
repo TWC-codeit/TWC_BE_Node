@@ -33,11 +33,11 @@ model Article {
   id          Int       @id @default(autoincrement())
   keyword     String
   title       String
-  publishedAt DateTime 
+  publishedAt DateTime? 
   source      String
   content     String?
   imageUrl    String?   
-  url         String
+  url         String?
 
   scraps      Scrap[]
 

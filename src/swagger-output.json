@@ -172,37 +172,37 @@
                   {
                     "type": "object",
                     "properties": {
-                      "articleId": {
-                        "type": "integer",
-                        "example": "any"
-                      }
-                    }
-                  },
-                  {
-                    "type": "object",
-                    "properties": {
                       "redisKey": {
                         "type": "string",
-                        "example": "any"
+                        "example": "keyword:{키워드명}:articles"
                       },
                       "index": {
                         "type": "integer",
                         "example": 1
                       }
                     }
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "articleId": {
+                        "type": "integer",
+                        "example": "3"
+                      }
+                    }
                   }
                 ]
               },
               "examples": {
-                "Example 1 (Article ID)": {
-                  "value": {
-                    "articleId": 15
-                  }
-                },
-                "Example 2 (Redis Key & Index)": {
+                "Example 1 (redisKey & index)": {
                   "value": {
                     "redisKey": "keyword:수출:articles",
-                    "index": 1
+                    "index": 0
+                  }
+                },
+                "Example 2 (articleId)": {
+                  "value": {
+                    "articleId": 15
                   }
                 }
               }

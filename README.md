@@ -21,7 +21,8 @@
 | main  | 제품으로 출시 (배포)| 
 | develop   | 배포 전 작업 기준   | 
 | feature  | 기능 단위 개발 및 수정 |
-| hotfix   | 긴급 수정   |  
+| hotfix   | 긴급 수정 (main에서)  |  
+| bugfix   | 버그 수정 (develop에서) |  
 
 <details>
   <summary>Branch Details</summary>
@@ -33,14 +34,13 @@
     - 개발, 테스트, 릴리즈 등 배포 전 작업의 기준이 되는 브랜치입니다.
     - main 브랜치에서 분기합니다.
     - 해당 브랜치를 default로 설정하고, 평소에는 이 브랜치를 기반으로 개발을 진행합니다.
-    - 모든 기능이 추가되고 버그가 수정되어 배포 가능한 안정적인 상태라면 develop 브랜치를 main 브랜치에 merge합니다.
+    - 모든 기능이 추가되고 버그가 수정되어 배포 가능한 안정적인 상태라면 main 브랜치에 병합합니다.
   - **feature**
     - 새로운 기능 개발 및 버그 수정이 필요할 때마다 develop 브랜치에서 분기하여 각 개발자가 맡은 작업을 개발하는 브랜치입니다.
-    - 작업이 완료되면 develop 브랜치로 merge합니다.
+    - 작업이 완료되면 develop 브랜치에 병합합니다.
   - **hotfix**
     - 배포한 버전에 긴급하게 수정을 해야할 필요가 있을 때 main 브랜치에서 분기하는 브랜치입니다.
-    - 문제가 되는 부분 수정 후, main 브랜치에 merge하고 배포합니다.
-    - hotfix 브랜치에서의 변경 사항은 develop 브랜치에도 merge합니다.
+    - main 브랜치에서 바로 작업을 시작하여, 수정이 끝나면 main 브랜치에 병합하여 배포하고, develop 브랜치에도 병합하여 수정 사항을 반영합니다.
 
 </details>
 
@@ -54,9 +54,9 @@
     ex) feat/#2-build-gradle-script
    
 3. hotfix  
-   `hotfix-{버전}`  
-    ex) hotfix-1.2.1
-   
+   `hotfix/내용`  
+    ex) hotfix/timeline-create-error
+
 
 ### Commit Type
 | **타입**    | **설명**                                                |

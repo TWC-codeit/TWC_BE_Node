@@ -1,12 +1,12 @@
 name: Deploy to AWS EC2 using Docker
 
+
 on:
-  push:
-    branches:
-      - develop
-  pull_request:
-    branches:
-      - develop
+  workflow_run:
+    workflows: ["CI Workflow"]  
+    types:
+      - completed
+    
 
 env:
   DOCKER_IMAGE_NAME: twc-be-node

@@ -174,7 +174,7 @@
                     "properties": {
                       "redisKey": {
                         "type": "string",
-                        "example": "keyword:{키워드명}:articles"
+                        "example": "keyword:{키워드명}:company_articles:{언론사명}"
                       },
                       "index": {
                         "type": "integer",
@@ -196,7 +196,7 @@
               "examples": {
                 "Example 1 (redisKey & index)": {
                   "value": {
-                    "redisKey": "keyword:수출:articles",
+                    "redisKey": "keyword:딥시크:company_articles:세계일보",
                     "index": 0
                   }
                 },

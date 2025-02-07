@@ -48,13 +48,18 @@ const createScrap = async (userId, articleId) => {
 const getAllScraps = async (userId) => {
     const scraps = await prisma.scrap.findMany({
         where: {
-            userId: userId,
+            userId: userId
         },
 
         include: {
             article: {
                 select: {
+                    source: true,
+                    imageUrl: true,
+                    keyword: true,
+                    publishedAt: true,
                     title: true,
+                    url: true,
                 },
             },
         },
@@ -65,10 +70,14 @@ const getAllScraps = async (userId) => {
     });
 
     return scraps.map(scrap => ({
-        id: scrap.id,
         articleId: scrap.articleId,
         title: scrap.article.title,
+        keyword: scrap.article.keyword,
+        imageUrl: scrap.article.imageUrl,
+        url: scrap.article.url,
+        source: scrap.article.source,
         scrapedAt: scrap.createdAt,
+        publishedAt: scrap.article.publishedAt
     }));
 }
 

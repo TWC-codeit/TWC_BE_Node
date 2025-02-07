@@ -70,6 +70,7 @@ const getAllScraps = async (userId) => {
     });
 
     return scraps.map(scrap => ({
+        scrapId: scrap.id,
         articleId: scrap.articleId,
         title: scrap.article.title,
         keyword: scrap.article.keyword,

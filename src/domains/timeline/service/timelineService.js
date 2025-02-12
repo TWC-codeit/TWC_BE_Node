@@ -219,8 +219,16 @@ const updateTimeline = async (userId, timelineId, name, items) => {
      
       }
 
-      // 수정된 타임라인 반환
       const updatedTimeline = await timelineRepository.findById(timelineId, userId);
+      const itemsWithArticles = await Promise.all(
+        updatedTimeline.items.map(async (item) => {
+          const article = await timelineItemRepository.findArticleByScrapId(item.scrapId);
+          return { ...item, article };
+        })
+      );
+
+      updatedTimeline.items = itemsWithArticles;
+
       logger.info(`Timeline updated successfully: timelineId = ${timelineId}`);
       return updatedTimeline;
     });

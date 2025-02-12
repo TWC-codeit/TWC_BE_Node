@@ -59,6 +59,29 @@ const findByTimelineId = async (timelineId) => {
   });
 };
 
+
+// timeline item의 scrapId에 해당하는 article 조회
+const findArticleByScrapId = async (scrapId) => {
+  // scrapId로 scrap 테이블에서 articleId를 찾기
+  const scrap = await prisma.scrap.findUnique({
+    where: {
+      id: scrapId,
+    },
+  });
+
+  if (scrap) {
+    const article = await prisma.article.findUnique({
+      where: {
+        id: scrap.articleId, // scrap에서 가져온 articleId로 article 조회
+      },
+    });
+    return article;
+  }
+
+  // scrap이 없으면 null 반환
+  return null;
+};
+
 module.exports = {
   create,
   deleteById,
@@ -66,4 +89,5 @@ module.exports = {
   updatePosition,
   updateItems,
   findByTimelineId,
+  findArticleByScrapId,
 };

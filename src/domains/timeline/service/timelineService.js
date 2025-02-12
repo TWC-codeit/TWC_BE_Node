@@ -153,8 +153,15 @@ const getTimelineById = async (timelineId, userId) => {
       return null; // 타임라인이 없으면 null 반환
     }
 
+    const itemsWithArticles = await Promise.all(
+      timeline.items.map(async (item) => {
+        const article = await timelineItemRepository.findArticleByScrapId(item.scrapId);
+        return { ...item, article };
+      })
+    );
+
     logger.info(`Successfully retrieved timeline with ID: ${timelineId} for user: ${userId}`);
-    return timeline;
+    return { ...timeline, items: itemsWithArticles };
   } catch (error) {
     logger.error(`Error retrieving timeline with ID: ${timelineId} for user: ${userId}, Error: ${error.message}`);
     throw error;
@@ -212,8 +219,16 @@ const updateTimeline = async (userId, timelineId, name, items) => {
      
       }
 
-      // 수정된 타임라인 반환
       const updatedTimeline = await timelineRepository.findById(timelineId, userId);
+      const itemsWithArticles = await Promise.all(
+        updatedTimeline.items.map(async (item) => {
+          const article = await timelineItemRepository.findArticleByScrapId(item.scrapId);
+          return { ...item, article };
+        })
+      );
+
+      updatedTimeline.items = itemsWithArticles;
+
       logger.info(`Timeline updated successfully: timelineId = ${timelineId}`);
       return updatedTimeline;
     });

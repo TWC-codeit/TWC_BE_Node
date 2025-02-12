@@ -74,7 +74,7 @@ const getTimelineById = async (req, res) => {
     }
 
     logger.info(`Successfully fetched a timeline: userId = ${userId}, timelineId = ${timelineId}`);
-    return res.status(200).json({ timeline: timeline, items: timeline.items });
+    return res.status(200).json({ timeline });
   } catch (error) {
     logger.error(`Failed to fetch a timeline with ID: ${timelineId} for user: ${userId}, Error: ${error.message}`);
     return res.status(500).json({ success: false, message: 'Failed to retrieve timeline' });

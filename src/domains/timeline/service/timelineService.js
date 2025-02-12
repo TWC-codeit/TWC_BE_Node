@@ -153,8 +153,15 @@ const getTimelineById = async (timelineId, userId) => {
       return null; // 타임라인이 없으면 null 반환
     }
 
+    const itemsWithArticles = await Promise.all(
+      timeline.items.map(async (item) => {
+        const article = await timelineItemRepository.findArticleByScrapId(item.scrapId);
+        return { ...item, article };
+      })
+    );
+
     logger.info(`Successfully retrieved timeline with ID: ${timelineId} for user: ${userId}`);
-    return timeline;
+    return { ...timeline, items: itemsWithArticles };
   } catch (error) {
     logger.error(`Error retrieving timeline with ID: ${timelineId} for user: ${userId}, Error: ${error.message}`);
     throw error;

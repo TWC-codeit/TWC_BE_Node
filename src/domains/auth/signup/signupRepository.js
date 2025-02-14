@@ -1,26 +1,25 @@
 const { prisma } = require('../../../config/db');
-const SignupDto = require('./signupDto');
+const signupDto = require('./signupDto');
 const logger = require('../../../config/logger');
 
-const createUser = async (SignupDto) => {
+const createUser = async (signupDto) => {
   try {
     
-    const birthDateObject = new Date(SignupDto.birthDate);
+    const birthDateObject = new Date(signupDto.birthDate);
 
     const user = await prisma.user.create({
       data: {
-        username: SignupDto.username,
-        password: SignupDto.password,
-        name: SignupDto.name,
-        gender: SignupDto.gender,
-        //birthDate: SignupDto.birthDate,
+        username: signupDto.username,
+        password: signupDto.password,
+        name: signupDto.name,
+        gender: signupDto.gender,
+        //birthDate: signupDto.birthDate,
         //birthDate: birthDateObject,
         birthDate: birthDateObject.toISOString().split('T')[0],
       },
     });
     return user;
   } catch (error) {
-    console.error('Error stack trace:', error.stack);  // 에러 스택을 콘솔에 출력
     logger.error(`createUser failed: ${error.message}`);
     throw new Error('createUser 실패');
   }

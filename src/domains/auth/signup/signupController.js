@@ -14,9 +14,12 @@ const signupController = [
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
         const statusCode = 400;
-        logger.warn(`(${statusCode}) Validation failed: ${errors.array().map(err => err.msg).join(', ')}`); // 검증 실패 로깅
-        return res.status(400).json({ message: errors.array().map(err => err.msg).join(', ') });
+        logger.warn(`(${statusCode}) Signup validation failed: ${errors.array().map(err => err.msg).join(', ')}`); // 검증 실패 로깅
+        return res.status(400).json({ 
+          "Invalid values": errors.array().map(err => ({ message: err.msg }))
+        });
       }
+
 
       // gender 값 변환
       let gender = req.body.gender;

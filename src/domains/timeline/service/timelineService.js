@@ -117,7 +117,7 @@ const deleteTimeline = async (userId, timelineId) => {
     logger.info(`Successfully deleted timeline ${timelineId} for user ${userId}`);
     return true;
   } catch (error) {
-    logger.error(`Error deleting timeline ${timelineId}: ${error.message}`);
+    logger.error(`Error deleting timeline ${timelineId}: ${error.message}\nStack trace: ${error.stack}`);
     throw error;
   }
 };
@@ -137,7 +137,7 @@ const getTimelines = async (userId) => {
 
     return timelines;
   } catch (error) {
-    logger.error(`Error retrieving timelines for user: ${userId}, Error: ${error.message}`);
+    logger.error(`Error retrieving timelines for user: ${userId}, Error: ${error.message}\nStack trace: ${error.stack}`);
     throw error; 
   }
 };
@@ -163,7 +163,7 @@ const getTimelineById = async (timelineId, userId) => {
     logger.info(`Successfully retrieved timeline with ID: ${timelineId} for user: ${userId}`);
     return { ...timeline, items: itemsWithArticles };
   } catch (error) {
-    logger.error(`Error retrieving timeline with ID: ${timelineId} for user: ${userId}, Error: ${error.message}`);
+    logger.error(`Error retrieving timeline with ID: ${timelineId} for user: ${userId}, Error: ${error.message}\nStack trace: ${error.stack}`);
     throw error;
   }
 };
@@ -233,7 +233,7 @@ const updateTimeline = async (userId, timelineId, name, items) => {
       return updatedTimeline;
     });
   } catch (error) {
-    logger.error(`Error updating timeline: ${error.message}, userId = ${userId}, timelineId = ${timelineId}`);
+    logger.error(`Error updating timeline: ${error.message}, userId = ${userId}, timelineId = ${timelineId}\nStack trace: ${error.stack}`);
     throw error;
   }
 };

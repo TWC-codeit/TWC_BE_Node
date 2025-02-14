@@ -3,6 +3,7 @@
 > 프로젝트 기간: 2024.12.30 ~ 2025.02.15
 
 ## 🏗️ Architecture
+![Image](https://github.com/user-attachments/assets/4a937c2d-e31e-4add-9784-4c68926b61be)  
 
 ## 🔧 Tech Stack
 <img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black"> <img src="https://img.shields.io/badge/node.js-339933?style=for-the-badge&logo=Node.js&logoColor=white"> <img src="https://img.shields.io/badge/express-000000?style=for-the-badge&logo=express&logoColor=white"> <img src="https://img.shields.io/badge/prisma-2D3748?style=for-the-badge&logo=prisma&logoColor=white">  

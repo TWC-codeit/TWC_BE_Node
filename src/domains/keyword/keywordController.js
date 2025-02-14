@@ -54,23 +54,32 @@ const getArticlesByCompany = async (req, res) => {
 };
 
 const getArticleCounts = async (req, res) => {
-  const { keyword } = req.params;
-  console.log('개수 조회 키워드: ', keyword);
+  const keywords = req.query.keywords ? req.query.keywords.split(',') : [];
 
-  if (!keyword) {
-    return res.status(400).json({ error: "Keyword is required" });
+  if (keywords.length === 0) {
+    return res.status(400).json({ error: "At least one keyword is required" });
   }
 
-  try {
-    const count = await fetchArticleCounts(keyword);
-    if (count === null) {
-      return res.status(404).json({ error: "Keyword not found in stats" });
-    }
+  console.log('개수 조회 키워드: ', keywords);
 
-    res.status(200).json(count);
+  try {
+    // 여러 키워드를 병렬로 조회
+    const results = await Promise.all(
+      keywords.map(keyword => fetchArticleCounts(keyword))
+    );
+
+    // 응답 데이터 정리
+    const response = Object.fromEntries(
+      keywords.map((keyword, index) => [
+        keyword,
+        results[index] || { error: "Keyword not found in stats" }
+      ])
+    );
+
+    res.status(200).json(response);
   } catch (error) {
-    console.error("Error fetching article count:", error.message);
-    res.status(500).json({ error: "Failed to fetch article count" });
+    console.error("Error fetching article counts:", error.message);
+    res.status(500).json({ error: "Failed to fetch article counts" });
   }
 };
 

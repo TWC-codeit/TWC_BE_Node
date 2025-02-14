@@ -63,36 +63,26 @@ const fetchArticlesByCompany = async (keyword, company) => {
 
 const fetchArticleCounts = async (keyword) => {
   console.log(`[fetchArticlesCounts] 조회 키워드: ${keyword}`);
+
   const key = "keyword:stats";
   const companyCntKey = `keyword:${keyword}:company_stats`;
 
-  // keyword:stats 값 조회
   try {
-    // keyword:stats 키 존재 여부 확인
-    const companyKeys = await redisClient.keys(key);
-    if (!companyKeys) {
-      console.log(`Key does not exist: ${key}`);
+    // 키가 존재하는지 확인 (`keys()` 대신 `hExists()` 사용하여 성능 최적화)
+    const exists = await redisClient.hExists(key, keyword);
+    if (!exists) {
+      console.log(`Keyword not found in stats: ${keyword}`);
       return null;
     }
 
-    // 키의 데이터 타입 확인
-    const type = await redisClient.type(key);
-
-    let totalCount = null;
-    if (type === "hash") {
-      // 특정 필드 값 조회
-      totalCount = await redisClient.hGet(key, keyword);
-      if (!totalCount) {
-        console.log(`keyword does not exist: ${keyword}`);
-        return null;
-      }
-    } else {
-      throw new Error(`Unsupported totalCount type: ${type}`);
+    // 특정 필드 값 조회
+    const totalCount = await redisClient.hGet(key, keyword);
+    if (!totalCount) {
+      console.log(`Keyword does not exist: ${keyword}`);
+      return null;
     }
 
-    // keyword:${keyword}:company_stats값 조회
-    // == 키워드에 대한 언론사 별 기사 개수 조회
-
+    // 언론사별 기사 개수 조회
     const mediaCounts = (await redisClient.hGetAll(companyCntKey)) || {};
 
     console.log(`키워드 전체 개수: ${totalCount}`);
@@ -101,13 +91,14 @@ const fetchArticleCounts = async (keyword) => {
     return {
       keyword,
       totalCount: parseInt(totalCount, 10),
-      mediaCounts: mediaCounts,
+      mediaCounts,
     };
   } catch (err) {
     console.error("Error fetching article counts:", err);
     throw err;
   }
 };
+
 
 const fetchKeywords = async () => {
   try {

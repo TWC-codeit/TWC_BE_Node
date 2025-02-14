@@ -3,22 +3,20 @@ const { normalizeData } = require("./redisUtils");
 
 const fetchArticlesByKeyword = async (keyword) => {
   try {
-    // 키 존재 여부 확인
-    const key = `keyword:${keyword}:company_articles:*`;
-    const companyKeys = await redisClient.keys(key);
-    console.log(companyKeys)
+    const keyPattern = `keyword:${keyword}:company_articles:*`;
+    const companyKeys = await redisClient.keys(keyPattern);
+
     if (!companyKeys || companyKeys.length === 0) {
-      console.log(`Key does not exist: ${key}`);
+      console.log(`Key does not exist: ${keyPattern}`);
       return {};
     }
+
     const articlesByCompany = {};
 
     await Promise.all(
       companyKeys.map(async (companyKey) => {
         const company = companyKey.split(":").pop();
-        const type = await redisClient.type(companyKey); // `TYPE` 명령어 호출
-
-        // 키의 데이터 타입 확인
+        const type = await redisClient.type(companyKey);
 
         let data = [];
         if (type === "string") {
@@ -35,12 +33,14 @@ const fetchArticlesByKeyword = async (keyword) => {
         articlesByCompany[company] = data;
       })
     );
+
     return articlesByCompany;
   } catch (err) {
     console.error("Error fetching articles by keyword:", err);
     throw err;
   }
 };
+
 
 const fetchArticlesByCompany = async (keyword, company) => {
   console.log(`조회 키워드: ${keyword}, 언론사: ${company}`);

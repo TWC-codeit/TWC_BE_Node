@@ -2,6 +2,7 @@ const signupService = require('./signupService');
 const { signupValidation } = require('./signupValidation');
 const logger = require('../../../config/logger');
 const { validationResult } = require('express-validator');
+const SignupDto = require('./signupDto');
 
 const signupController = [
   ...signupValidation, // 유효성 검사 미들웨어 추가
@@ -14,30 +15,28 @@ const signupController = [
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
         const statusCode = 400;
-        logger.warn(`(${statusCode}) Validation failed: ${errors.array().map(err => err.msg).join(', ')}`); // 검증 실패 로깅
-        return res.status(400).json({ message: errors.array().map(err => err.msg).join(', ') });
+        logger.warn(`(${statusCode}) user validation failed: ${errors.array().map(err => err.msg).join(', ')}`); // 검증 실패 로깅
+        return res.status(400).json({ 
+          "Invalid values": errors.array().map(err => ({ message: err.msg }))
+        });
       }
 
-      // gender 값 변환
-      let gender = req.body.gender;
-      if (gender === '남성') gender = 'm';
-      if (gender === '여성') gender = 'f';
-      if (gender === '비공개') gender = 'n';
-
-      const signupData = {
-        ...req.body,
-        gender,
-      };
+      const userData = new SignupDto(req.body.username, req.body.password, req.body.name, req.body.gender, req.body.birthDate);
 
       // 회원가입 처리
-      const user = await signupService.signupUser(signupData);
+      const user = await signupService.createUser(userData);
       logger.info(`User created successfully: ID=${user.id}, username=${user.username}`); // 성공 로깅
-      const { password, ...userWithoutPassword } = user;
-      return res.status(201).json(userWithoutPassword);
 
+      const responseUser = {
+        ...user,
+        gender: SignupDto.convertGenderToKorean(user.gender),
+        password: undefined
+      };
+      
+      return res.status(201).json(responseUser);
     } catch (error) {
       const statusCode = 500;
-      logger.error(`(${statusCode}) Signup failed: ${error.message}`); // 오류 로깅
+      logger.error(`(${statusCode}) Signup failed: ${error.message}\nStack trace: ${error.stack}`);
       return res.status(500).json({ message: '서버 오류', error: error.message });
     }
   }

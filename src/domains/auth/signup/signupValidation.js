@@ -3,43 +3,60 @@ const { prisma } = require('../../../config/db');
 
 const signupValidation = [
   body('username')
-  .isString()
-  .notEmpty()
-  .withMessage('Username is required.')
-  .isLength({ min: 5, max: 20 })
-  .withMessage('Username must be between 5 and 20 characters.')
-  .custom(async (value) => {
-    // Prisma를 사용해 username 중복 확인
-    const existingUser = await prisma.user.findUnique({
-      where: { username: value },
-    });
-
-    if (existingUser) {
-      throw new Error('Username already exists. Please choose another.');
-    }
-  }),
+    .notEmpty().withMessage('Username is required.')
+    .isString().withMessage('Username must be a string.')
+    .isLength({ min: 5, max: 20 }).withMessage('Username must be between 5 and 20 characters.')
+    .custom(async (value) => {
+      const existingUser = await prisma.user.findUnique({
+        where: { username: value },
+      });
+      if (existingUser) {
+        throw new Error('Username already exists. Please choose another.');
+      }
+    }),
 
   body('password')
-    .isString()
-    .notEmpty()
-    .withMessage('Password is required.')
-    .isLength({ min: 8 })
-    .withMessage('Password must be at least 8 characters long.'),
-  
-  body('gender')
-    .isIn(['남성', '여성', '비공개'])
-    .withMessage('Gender must be either 남성, 여성, or 비공개.'),
-  
-  body('birthDate')
-    .matches(/^\d{4}-\d{2}-\d{2}$/)  // YYYY-MM-DD 형식을 검증하는 정규 표현식
-    .withMessage('Birthdate must be a valid date in YYYY-MM-DD format.'),
+    .notEmpty().withMessage('Password is required.')
+    .custom((value) => {
+      if (value && value.length < 8) {
+        throw new Error('Password must be at least 8 characters long.');
+      }
+      return true;
+    }),
 
   body('name')
-    .isString()
-    .notEmpty()
-    .withMessage('Name is required.')
-    .isLength({ max: 50 })
-    .withMessage('Name must not exceed 50 characters.')
+    .custom((value) => {
+      if (!value) {
+        throw new Error('Name is required.');
+      }
+      if (typeof value !== 'string') {
+        throw new Error('Name must be a string.');
+      }
+      if (value.length > 50) {
+        throw new Error('Name must not exceed 50 characters.');
+      }
+      return true;
+    }), 
+
+  body('gender')
+    .notEmpty().withMessage('Gender is required.')
+    .custom((value) => {
+      if (value && !['남성', '여성', '비공개'].includes(value)) {
+        throw new Error('Gender must be either 남성, 여성, or 비공개.');
+      }
+      return true;
+    }),
+
+  body('birthDate')
+    .custom((value) => {
+      if (!value) {
+        throw new Error('Birthdate is required.');
+      }
+      if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) {
+        throw new Error('Birthdate must be a valid date in YYYY-MM-DD format.');
+      }
+      return true;
+    }),
 ];
 
 module.exports = { signupValidation };

@@ -20,7 +20,6 @@ const createUser = async (SignupDto) => {
     });
     return user;
   } catch (error) {
-    console.error('Error stack trace:', error.stack);  // 에러 스택을 콘솔에 출력
     logger.error(`createUser failed: ${error.message}`);
     throw new Error('createUser 실패');
   }

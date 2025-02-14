@@ -5,7 +5,7 @@ const timelineService = require('../service/timelineService');
 const createTimeline = async (req, res) => {
   const userId = req.user.id; // JWT 토큰에서 사용자 정보 가져오기
   const { name, items } = req.body; // 요청 본문에서 타임라인 이름과 아이템들 받기
-  logger.info(`Received request to create timeline: userId = ${userId}, name = ${name}`);
+  logger.info(`Received request to create timeline: ${req.method} ${req.originalUrl}, userId=${userId}, name=${name}`);
 
   if (!name) {
     return res.status(400).json({ success: false, message: 'Timeline name is required' });
@@ -26,7 +26,7 @@ const createTimeline = async (req, res) => {
 const deleteTimeline = async (req, res) => {
   const userId = req.user.id;    
   const { timelineId } = req.params;
-  logger.info(`Received request to delete timeline: userId = ${userId}, timelineId = ${timelineId}`);
+  logger.info(`Received request to delete timeline: ${req.method} ${req.originalUrl}, userId=${userId}, timelineId=${timelineId}`);
 
   try {
     const isDeleted = await timelineService.deleteTimeline(userId, timelineId);
@@ -47,7 +47,7 @@ const deleteTimeline = async (req, res) => {
 // 타임라인 목록 조회
 const getTimelines = async (req, res) => {
   const userId = req.user.id;
-  logger.info(`Received request to fetch timelines for user: ${userId}`);
+  logger.info(`Received request to fetch timelines for user: ${req.method} ${req.originalUrl}, userId=${userId}`);
   
   try {
     const timelines = await timelineService.getTimelines(userId);
@@ -63,7 +63,7 @@ const getTimelines = async (req, res) => {
 const getTimelineById = async (req, res) => {
   const { timelineId } = req.params; 
   const userId = req.user.id;
-  logger.info(`Received request to fetch a timeline: userId = ${userId}, timelineId = ${timelineId}`);
+  logger.info(`Received request to fetch a timeline: ${req.method} ${req.originalUrl}, userId=${userId}, timelineId=${timelineId}`);
 
   try {
     const timeline = await timelineService.getTimelineById(timelineId, userId);
@@ -86,7 +86,7 @@ const updateTimeline = async (req, res) => {
   const { timelineId } = req.params;
   const userId = req.user.id;
   const { name, items } = req.body;
-  logger.info(`Received request to update a timeline: userId = ${userId}, timelineId = ${timelineId}`);
+  logger.info(`Received request to update a timeline: ${req.method} ${req.originalUrl}, userId=${userId}, timelineId=${timelineId}`);
 
   try {
     const updatedTimeline = await timelineService.updateTimeline(userId, timelineId, name, items);
@@ -101,6 +101,7 @@ const updateTimeline = async (req, res) => {
   } catch (error) {
     // 순서 이상 오류 처리
     if (error.code === 'INVALID_POSITIONS') {
+      logger.warn(`Invalid positions error: ${error.message}`);
       return res.status(400).json({
         success: false,
         message: 'Positions must be consecutive starting from 1 and cannot have duplicates.',
@@ -109,6 +110,7 @@ const updateTimeline = async (req, res) => {
   
     // 중복된 scrapId 오류 처리
     if (error.code === 'DUPLICATE_SCRAPS') {
+      logger.warn(`Duplicate scrapId error: ${error.message}`);
       return res.status(400).json({
         success: false,
         message: 'Duplicate scrapId found within the same timeline.',

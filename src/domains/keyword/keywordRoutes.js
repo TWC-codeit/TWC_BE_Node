@@ -4,7 +4,7 @@ const { getArticlesByKeywords, getArticlesByCompany, getArticleCounts, getKeywor
 const router = express.Router();
 
 // 특정 키워드를 포함한 언론사 별 기사 목록 조회
-router.get('/articles', getArticlesByKeywords);
+router.get('/articles/list', getArticlesByKeywords);
 
 // 키워드별 개수 조회
 router.get('/articles/count', getArticleCounts);

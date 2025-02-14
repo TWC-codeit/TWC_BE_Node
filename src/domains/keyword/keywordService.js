@@ -1,6 +1,23 @@
 const { client: redisClient } = require("../../config/redis.js"); // Redis 클라이언트 설정
 const { normalizeData } = require("./redisUtils");
 
+const fetchArticleTotalCount = async (keyword) => {
+  try {
+    const key = "keyword:stats";
+    const exists = await redisClient.hExists(key, keyword);
+    if (!exists) {
+      console.log(`Key does not exist: ${keyword}`);
+      return null;
+    }
+
+    const totalCount = await redisClient.hGet(key, keyword);
+    return totalCount ? parseInt(totalCount, 10) : 0;
+  } catch (err) {
+    console.error("Error fetching totalCount:", err);
+    throw err;
+  }
+};
+
 const fetchArticlesByKeyword = async (keyword) => {
   try {
     const keyPattern = `keyword:${keyword}:company_articles:*`;
@@ -111,4 +128,4 @@ const fetchKeywords = async () => {
   }
 };
 
-module.exports = { fetchArticlesByKeyword, fetchArticlesByCompany, fetchArticleCounts, fetchKeywords };
+module.exports = { fetchArticleTotalCount, fetchArticlesByKeyword, fetchArticlesByCompany, fetchArticleCounts, fetchKeywords };

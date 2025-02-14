@@ -1,19 +1,19 @@
 const { prisma } = require('../../../config/db');
-const signupDto = require('./signupDto');
+const SignupDto = require('./signupDto');
 const logger = require('../../../config/logger');
 
-const createUser = async (signupDto) => {
+const createUser = async (SignupDto) => {
   try {
     
-    const birthDateObject = new Date(signupDto.birthDate);
+    const birthDateObject = new Date(SignupDto.birthDate);
 
     const user = await prisma.user.create({
       data: {
-        username: signupDto.username,
-        password: signupDto.password,
-        name: signupDto.name,
-        gender: signupDto.gender,
-        //birthDate: signupDto.birthDate,
+        username: SignupDto.username,
+        password: SignupDto.password,
+        name: SignupDto.name,
+        gender: SignupDto.gender,
+        //birthDate: SignupDto.birthDate,
         //birthDate: birthDateObject,
         birthDate: birthDateObject.toISOString().split('T')[0],
       },

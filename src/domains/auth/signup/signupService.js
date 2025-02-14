@@ -1,12 +1,12 @@
 const bcrypt = require('bcryptjs');
 const signupRepository = require('./signupRepository');
-const signupDto = require('./signupDto');
+const SignupDto = require('./signupDto');
 
 const createUser = async (userData) => {
   // 비밀번호 해싱
   const hashedPassword = await bcrypt.hash(userData.password, 10);
 
-  const gender = signupDto.convertGenderToEnglish(userData.gender);
+  const gender = SignupDto.convertGenderToEnglish(userData.gender);
 
   // DB에 저장할 객체 생성
   const newUser = {

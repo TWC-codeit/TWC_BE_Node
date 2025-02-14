@@ -2,7 +2,7 @@ const signupService = require('./signupService');
 const { signupValidation } = require('./signupValidation');
 const logger = require('../../../config/logger');
 const { validationResult } = require('express-validator');
-const UserDto = require('./signupDto');
+const SignupDto = require('./signupDto');
 
 const signupController = [
   ...signupValidation, // 유효성 검사 미들웨어 추가
@@ -21,7 +21,7 @@ const signupController = [
         });
       }
 
-      const userData = new UserDto(req.body.username, req.body.password, req.body.name, req.body.gender, req.body.birthDate);
+      const userData = new SignupDto(req.body.username, req.body.password, req.body.name, req.body.gender, req.body.birthDate);
 
       // 회원가입 처리
       const user = await signupService.createUser(userData);
@@ -29,7 +29,7 @@ const signupController = [
 
       const responseUser = {
         ...user,
-        gender: UserDto.convertGenderToKorean(user.gender),
+        gender: SignupDto.convertGenderToKorean(user.gender),
         password: undefined
       };
       

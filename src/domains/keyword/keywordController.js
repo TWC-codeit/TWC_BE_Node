@@ -1,5 +1,35 @@
-const { fetchArticlesByKeyword, fetchArticlesByCompany, fetchArticleCounts, fetchKeywords } = require("./keywordService");
+const { fetchArticleTotalCount, fetchArticlesByKeyword, fetchArticlesByCompany, fetchArticleCounts, fetchKeywords } = require("./keywordService");
 const redis = require("../../config/redis.js"); // Redis 클라이언트 불러오기
+
+const getArticleTotalCount = async (req, res) => {
+  const keywords = req.query.keywords ? req.query.keywords.split(',') : [];
+
+  if (keywords.length === 0) {
+    return res.status(400).json({ error: "At least one keyword is required" });
+  }
+
+  console.log("조회 키워드:", keywords);
+
+  try {
+    const results = await Promise.all(
+      keywords.map(async (keyword) => {
+        const totalCount = await fetchArticleTotalCount(keyword);
+        return { keyword, totalCount };
+      })
+    );
+
+    // 키워드별 totalCount만 반환
+    const response = Object.fromEntries(
+      results.map(({ keyword, totalCount }) => [keyword, totalCount])
+    );
+
+    res.status(200).json(response);
+  } catch (error) {
+    console.error("Error fetching totalCounts:", error.message);
+    res.status(500).json({ error: "Failed to fetch total counts" });
+  }
+};
+
 
 const getArticlesByKeywords = async (req, res) => {
   const keywords = req.query.keywords ? req.query.keywords.split(',') : [];
@@ -95,4 +125,4 @@ const getKeywords = async (req, res) => {
 };
 
 
-module.exports = { getArticlesByKeywords, getArticlesByCompany, getArticleCounts, getKeywords };
+module.exports = { getArticleTotalCount, getArticlesByKeywords, getArticlesByCompany, getArticleCounts, getKeywords };

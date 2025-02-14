@@ -499,7 +499,7 @@
             "schema": {
               "type": "string"
             },
-            "example": "대통령, 트럼프, 정치"
+            "example": "대통령,트럼프,정치"
           }
         ],
         "responses": {
@@ -527,7 +527,7 @@
             "schema": {
               "type": "string"
             },
-            "example": "대통령, 트럼프, 정치"
+            "example": "대통령,트럼프,정치"
           }
         ],
         "responses": {
@@ -555,7 +555,7 @@
             "schema": {
               "type": "string"
             },
-            "example": "대통령, 트럼프, 정치"
+            "example": "대통령,트럼프,정치"
           }
         ],
         "responses": {

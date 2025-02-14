@@ -13,6 +13,56 @@
 <img src="https://img.shields.io/badge/amazon EC2-FF9900?style=for-the-badge&logo=amazon ec2&logoColor=white"> <img src="https://img.shields.io/badge/docker-2496ED?style=for-the-badge&logo=docker&logoColor=white">  <img src="https://img.shields.io/badge/github actions-2088FF?style=for-the-badge&logo=github actions&logoColor=white"> <img src="https://img.shields.io/badge/git-F05032?style=for-the-badge&logo=git&logoColor=white"> <img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=git&logoColor=white">  
 
 
+## 🧑‍💻 Developers
+<table>
+  <tr>
+    <!-- 사진 행 -->
+    <td align="center">
+      <a href="https://github.com/HSK021843">
+        <img src="https://avatars.githubusercontent.com/HSK021843" width="100px" alt="김형석" />
+      </a>
+    </td>
+    <td align="center">
+      <a href="https://github.com/rosejinse">
+        <img src="https://avatars.githubusercontent.com/rosejinse" width="100px" alt="진소은" />
+      </a>
+    </td>
+    <td align="center">
+      <a href="https://github.com/yjhss">
+        <img src="https://avatars.githubusercontent.com/yjhss" width="100px" alt="홍유진" />
+      </a>
+    </td>
+  </tr>
+  <tr>
+    <!-- 이름 행 -->
+    <td align="center"><b>김형석</b></td>
+    <td align="center"><b>진소은</b></td>
+    <td align="center"><b>홍유진</b></td>
+  </tr>
+  <tr>
+    <!-- 역할 행 -->
+    <td align="center">
+      <ul>
+        <li>로그인</li>
+        <li>스크랩</li>
+      </ul>
+    </td>
+    <td align="center">
+      <ul>
+        <li>JWT 인증</li>
+        <li>뉴스/키워드</li>
+      </ul>
+    </td>
+    <td align="center">
+      <ul>
+        <li>회원가입</li>
+        <li>타임라인</li>
+      </ul>
+    </td>
+  </tr>
+</table>  
+
+
 ## 📜 Git Convention
 
 ### Branch
@@ -154,53 +204,3 @@ Type: 제목
   <summary>Git 협업 참고 자료</summary>
     https://velog.io/@pgmjun/Github-%ED%98%91%EC%97%85-%EC%9D%B4%EA%B2%83%EB%A7%8C%EC%9D%80-%EC%95%8C%EC%9E%90-Issue-PR
 </details>
-
-
-## 🧑‍💻 Developers
-<table>
-  <tr>
-    <!-- 사진 행 -->
-    <td align="center">
-      <a href="https://github.com/HSK021843">
-        <img src="https://avatars.githubusercontent.com/HSK021843" width="100px" alt="김형석" />
-      </a>
-    </td>
-    <td align="center">
-      <a href="https://github.com/rosejinse">
-        <img src="https://avatars.githubusercontent.com/rosejinse" width="100px" alt="진소은" />
-      </a>
-    </td>
-    <td align="center">
-      <a href="https://github.com/yjhss">
-        <img src="https://avatars.githubusercontent.com/yjhss" width="100px" alt="홍유진" />
-      </a>
-    </td>
-  </tr>
-  <tr>
-    <!-- 이름 행 -->
-    <td align="center"><b>김형석</b></td>
-    <td align="center"><b>진소은</b></td>
-    <td align="center"><b>홍유진</b></td>
-  </tr>
-  <tr>
-    <!-- 역할 행 -->
-    <td align="center">
-      <ul>
-        <li>로그인</li>
-        <li>스크랩</li>
-      </ul>
-    </td>
-    <td align="center">
-      <ul>
-        <li>토큰 인증</li>
-        <li>키워드/뉴스</li>
-      </ul>
-    </td>
-    <td align="center">
-      <ul>
-        <li>회원가입</li>
-        <li>타임라인</li>
-      </ul>
-    </td>
-  </tr>
-</table>

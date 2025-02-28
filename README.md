@@ -1,6 +1,10 @@
 # TWC-Backend-Node
-> Codeit Boost 데모 데이 [TWC]  
 > 프로젝트 기간: 2024.12.30 ~ 2025.02.15
+- 뉴스 인기 키워드로 구성된 워드클라우드
+- 키워드 별로 여러 언론사 뉴스 모아보기
+- 원하는 뉴스 기사 스크랩 및 타임라인 제작
+
+[TWC_BE_Python Github Repository](https://github.com/Leehyeongseok010802/Python_TWC)
 
 ## 🏗️ Architecture
 ![Image](https://github.com/user-attachments/assets/4a937c2d-e31e-4add-9784-4c68926b61be)  
